@@ -77,12 +77,12 @@ export const apiService = {
     updateProduct: (id, data) => api.put(`/products/products/${id}`, data),
     deleteProduct: (id) => api.delete(`/products/products/${id}`),
 
-    // Groceries
-    getGroceries: () => api.get('/products/groceries'),
-    getGrocery: (id) => api.get(`/products/groceries/${id}`),
-    createGrocery: (data) => api.post('/products/groceries', data),
-    updateGrocery: (id, data) => api.put(`/products/groceries/${id}`, data),
-    deleteGrocery: (id) => api.delete(`/products/groceries/${id}`),
+    // Electronics
+    getElectronics: () => api.get('/products/electronics'),
+    getElectronicsItem: (id) => api.get(`/products/electronics/${id}`),
+    createElectronics: (data) => api.post('/products/electronics', data),
+    updateElectronics: (id, data) => api.put(`/products/electronics/${id}`, data),
+    deleteElectronics: (id) => api.delete(`/products/electronics/${id}`),
 
     // Services
     getService: (id) => api.get(`/services/${id}`),

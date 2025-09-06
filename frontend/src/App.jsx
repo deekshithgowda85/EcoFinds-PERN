@@ -19,7 +19,7 @@ import CartSummary from './pages/CartSummary';
 import OrderSummaryConfirm from './pages/OrderSummaryConfirm';
 import PaymentDetails from './pages/PaymentDetails';
 import OrderSuccessPage from './pages/OrderSuccessPage';
-import Groceries from './pages/Groceries';
+import Electronics from './pages/Electronics';
 
 function App() {
   return (
@@ -36,9 +36,15 @@ function App() {
           <Route path="/products/:id" element={<GrocDetail />} />
           <Route path="/product/:id" element={<GrocDetail />} />
 
-          {/* Grocery routes */}
-          <Route path="/groceries" element={<Groceries />} />
-          <Route path="/grocery" element={<Groceries />} />
+          {/* Electronics routes */}
+          <Route path="/electronics" element={<Electronics />} />
+          <Route path="/electronic" element={<Electronics />} />
+          <Route path="/electronics/:id" element={<Detail />} />
+          <Route path="/electronic/:id" element={<Detail />} />
+          
+          {/* Legacy grocery routes (redirect to electronics) */}
+          <Route path="/groceries" element={<Electronics />} />
+          <Route path="/grocery" element={<Electronics />} />
           <Route path="/groceries/:id" element={<Detail />} />
           <Route path="/grocery/:id" element={<Detail />} />
 

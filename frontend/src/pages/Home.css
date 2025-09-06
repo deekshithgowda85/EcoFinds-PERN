@@ -1,0 +1,21 @@
+/* Home page specific styles using project's existing design patterns */
+
+.homescene-root {
+  font-family: inherit;
+  color: inherit;
+}
+
+/* Additional custom styles for home page if needed */
+.category-button-active {
+  background-color: #10b981;
+  color: white;
+}
+
+.category-button-inactive {
+  background-color: #e5e7eb;
+  color: #374151;
+}
+
+.category-button-inactive:hover {
+  background-color: #d1d5db;
+}
