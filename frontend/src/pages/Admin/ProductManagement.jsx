@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import AdminNavbar from '../../components/AdminNavbar';
 import axios from 'axios';
-import supabaseStorageService from '../../services/supabaseStorage';
 
 const ProductManagement = () => {
     const [products, setProducts] = useState([]);
@@ -55,8 +54,17 @@ const ProductManagement = () => {
         const file = e.target.files[0];
         if (file) {
             try {
-                // Validate file first
-                supabaseStorageService.validateFile(file);
+                // Validate file size and type
+                const maxSize = 5 * 1024 * 1024; // 5MB
+                const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
+                
+                if (!allowedTypes.includes(file.type)) {
+                    throw new Error('Invalid file type. Only JPEG, PNG, GIF, and WebP are allowed.');
+                }
+                
+                if (file.size > maxSize) {
+                    throw new Error(`File size too large. Maximum size is ${maxSize / (1024 * 1024)}MB.`);
+                }
                 
                 setSelectedFile(file);
                 setUploading(true);
@@ -68,18 +76,24 @@ const ProductManagement = () => {
                 };
                 reader.readAsDataURL(file);
                 
-                // Upload to Supabase Storage
-                const folderName = selectedProduct || selectedElectronic ? 
-                    (selectedProduct ? 'products' : 'electronics') : 'products';
-                    
-                const uploadResult = await supabaseStorageService.uploadFile(file, folderName);
+                // Upload to backend API which handles Supabase
+                const formData = new FormData();
+                formData.append('image', file);
+                
+                const response = await axios.post('http://localhost:5000/api/products/upload-image', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                });
+                
+                const imageUrl = response.data.imageUrl;
                 
                 setFormData(prev => ({
                     ...prev,
-                    image: uploadResult.url
+                    image: imageUrl
                 }));
                 
-                console.log('File uploaded successfully:', uploadResult.url);
+                console.log('File uploaded successfully:', imageUrl);
                 
             } catch (error) {
                 console.error('Error uploading file:', error);

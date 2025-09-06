@@ -78,7 +78,6 @@ function ProductPage() {
   return (
     <div className="min-h-screen bg-white">
       <Navbar />
-      <MainBanner />
 
       {/* Wrap banner and cart button in a flex column for correct stacking */}
       <div className="flex flex-col">

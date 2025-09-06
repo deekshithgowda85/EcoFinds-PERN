@@ -47,43 +47,19 @@ async function createSampleData() {
 
         // Check if sample products exist
         const productCount = await Product.count();
-        if (productCount === 0) {
-            await Product.bulkCreate([
-                {
-                    name: 'Eco-Friendly Water Bottle',
-                    price: 25.99,
-                    image: '/uploads/water-bottle.jpg',
-                    description: 'Sustainable stainless steel water bottle'
-                },
-                {
-                    name: 'Bamboo Toothbrush Set',
-                    price: 12.99,
-                    image: '/uploads/toothbrush.jpg',
-                    description: 'Set of 4 biodegradable bamboo toothbrushes'
-                }
-            ]);
-            console.log('✅ Sample products created');
+        if (productCount > 0) {
+            await Product.destroy({ where: {} });
+            console.log('✅ Existing products cleared');
         }
 
         // Check if sample electronics exist
         const electronicsCount = await Electronics.count();
-        if (electronicsCount === 0) {
-            await Electronics.bulkCreate([
-                {
-                    name: 'Eco-Friendly Solar Charger',
-                    price: 89.99,
-                    image: '/uploads/solar-charger.jpg',
-                    description: 'Portable solar power bank for sustainable charging'
-                },
-                {
-                    name: 'Energy-Efficient LED Smart Bulb',
-                    price: 24.99,
-                    image: '/uploads/smart-bulb.jpg',
-                    description: 'WiFi-enabled LED bulb with energy monitoring'
-                }
-            ]);
-            console.log('✅ Sample electronics created');
+        if (electronicsCount > 0) {
+            await Electronics.destroy({ where: {} });
+            console.log('✅ Existing electronics cleared');
         }
+
+        console.log('✅ Database ready for fresh uploads - no sample data');
 
     } catch (error) {
         console.error('Warning: Could not create sample data:', error.message);
