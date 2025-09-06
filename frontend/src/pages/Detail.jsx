@@ -22,13 +22,13 @@ const Detail = () => {
         const fetchData = async () => {
             try {
                 setLoading(true);
-                // Fetch main product
-                const response = await apiService.getGrocery(id);
+                // Fetch main electronics item
+                const response = await apiService.getElectronicsItem(id);
                 if (response && response.data) {
                     setDetail(response.data);
                     setError(null);
                 } else {
-                    setError('Grocery item not found');
+                    setError('Electronics item not found');
                 }
 
                 // Fetch related products and electronics
@@ -51,8 +51,8 @@ const Detail = () => {
                     console.error('Error fetching related items:', relatedError);
                 }
             } catch (err) {
-                console.error('Error fetching grocery:', err);
-                setError('Failed to fetch grocery details. Please try again later.');
+                console.error('Error fetching electronics:', err);
+                setError('Failed to fetch electronics details. Please try again later.');
             } finally {
                 setLoading(false);
             }
@@ -61,7 +61,7 @@ const Detail = () => {
         if (id) {
             fetchData();
         } else {
-            setError('Invalid grocery ID');
+            setError('Invalid electronics ID');
             setLoading(false);
         }
     }, [id]);
@@ -79,7 +79,7 @@ const Detail = () => {
             dispatch(addToCart({
                 productId: detail.id,
                 quantity: quantity,
-                source: 'groceries'
+                source: 'electronics'
             }));
             // Optional: Show a success message or notification here
         }
@@ -114,12 +114,12 @@ const Detail = () => {
                 <Navbar />
                 <div className="w-full max-w-[1200px] mx-auto px-4 py-8">
                     <div className="text-center">
-                        <h2 className="text-2xl font-bold text-red-600 mb-4">{error || 'Grocery item not found'}</h2>
+                        <h2 className="text-2xl font-bold text-red-600 mb-4">{error || 'Electronics item not found'}</h2>
                         <button
-                            onClick={() => navigate('/groceries')}
+                            onClick={() => navigate('/electronics')}
                             className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-colors"
                         >
-                            Back to Groceries
+                            Back to Electronics
                         </button>
                     </div>
                 </div>
@@ -132,10 +132,10 @@ const Detail = () => {
             <Navbar />
             <div className="w-full max-w-[1200px] mx-auto px-4 py-8">
                 <button
-                    onClick={() => navigate('/groceries')}
+                    onClick={() => navigate('/electronics')}
                     className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded transition-colors mb-6"
                 >
-                    &larr; Back to Groceries
+                    &larr; Back to Electronics
                 </button>
 
                 <div className='grid grid-cols-1 lg:grid-cols-3 gap-8'>
