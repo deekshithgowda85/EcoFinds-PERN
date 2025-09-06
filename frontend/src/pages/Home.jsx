@@ -82,14 +82,13 @@ function Homescene() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
-          <div className="relative">
-            <div className="w-20 h-20 border-4 border-green-200 border-t-green-500 rounded-full animate-spin mx-auto mb-4"></div>
-            <div className="absolute inset-0 w-16 h-16 border-4 border-transparent border-t-blue-500 rounded-full animate-spin animation-delay-150 mx-auto mt-2 ml-2"></div>
+          <div className="relative mb-6">
+            <div className="w-16 h-16 border-4 border-gray-200 border-t-orange-500 rounded-full animate-spin mx-auto"></div>
           </div>
-          <h2 className="text-2xl font-bold text-gray-800 mb-2">EcoFinds</h2>
-          <p className="text-gray-600 animate-pulse">Loading sustainable products...</p>
+          <h2 className="text-xl font-semibold text-gray-800 mb-2">EcoFinds</h2>
+          <p className="text-gray-600">Loading products...</p>
         </div>
       </div>
     );
@@ -97,14 +96,14 @@ function Homescene() {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-red-50 to-orange-50 flex items-center justify-center">
-        <div className="text-center p-8 bg-white rounded-2xl shadow-xl">
-          <div className="text-6xl mb-4">😞</div>
-          <h2 className="text-2xl font-bold text-gray-800 mb-2">Oops! Something went wrong</h2>
-          <p className="text-red-500 text-lg">{error}</p>
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center p-8 bg-white rounded-lg shadow-lg max-w-md">
+          <div className="text-4xl mb-4 text-red-500">⚠️</div>
+          <h2 className="text-xl font-semibold text-gray-800 mb-2">Something went wrong</h2>
+          <p className="text-red-600 mb-4">{error}</p>
           <button 
             onClick={() => window.location.reload()} 
-            className="mt-4 px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
+            className="px-6 py-2 bg-orange-500 text-white rounded-md hover:bg-orange-600 transition-colors font-medium"
           >
             Try Again
           </button>
@@ -114,126 +113,115 @@ function Homescene() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-blue-50">
-      {/* Intro Animation Overlay */}
-      <div className={`fixed inset-0 bg-gradient-to-br from-green-500 to-blue-600 z-50 flex items-center justify-center transition-all duration-1000 ${showContent ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
+    <div className="min-h-screen bg-gray-50">
+      {/* Professional Intro Animation Overlay */}
+      <div className={`fixed inset-0 bg-slate-900 z-50 flex items-center justify-center transition-all duration-700 ease-in-out ${showContent ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
         <div className="text-center text-white">
-          <h1 className="text-6xl font-bold mb-4 animate-bounce">🌱</h1>
-          <h2 className="text-4xl font-bold mb-2 animate-fade-in-up">EcoFinds</h2>
-          <p className="text-xl animate-fade-in-up animation-delay-300">Discover Sustainable Living</p>
+          <div className="w-20 h-20 bg-orange-500 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg className="w-10 h-10" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd" />
+            </svg>
+          </div>
+          <h2 className="text-2xl font-bold mb-2">EcoFinds</h2>
+          <p className="text-gray-300">Discover Sustainable Products</p>
         </div>
       </div>
 
-      <div className={`transition-all duration-1000 ${showContent ? 'opacity-100 transform translate-y-0' : 'opacity-0 transform translate-y-10'}`}>
+      <div className={`transition-all duration-700 ease-in-out ${showContent ? 'opacity-100' : 'opacity-0'}`}>
         <Navbar />
         
-        {/* Enhanced MainBanner with Animation */}
-        <div className="relative overflow-hidden">
+        {/* Main Banner */}
+        <div className="relative">
           <MainBanner />
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent transform -skew-x-12 animate-shimmer"></div>
         </div>
 
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Category Selection with Modern Design */}
-          <div className="py-12" id="categories">
-            <div className="text-center mb-12">
-              <h2 className="text-black text-4xl font-bold mb-4 animate-fade-in-up">Shop by Category</h2>
-              <div className="w-24 h-1 bg-gradient-to-r from-green-400 to-blue-500 mx-auto rounded-full"></div>
-            </div>
-            
-            <div className="flex justify-center space-x-6 mb-12">
-              <button
-                onClick={() => handleCategoryClick('products')}
-                className={`group relative px-8 py-4 rounded-2xl font-semibold transition-all duration-300 transform hover:scale-105 ${
-                  activeCategory === 'products'
-                    ? 'bg-gradient-to-r from-green-500 to-green-600 text-white shadow-xl'
-                    : 'bg-white text-gray-700 hover:bg-gray-50 shadow-lg border border-gray-200'
-                }`}
-              >
-                <span className="relative z-10">🛍️ Products</span>
-                {activeCategory === 'products' && (
-                  <div className="absolute inset-0 bg-gradient-to-r from-green-400 to-green-600 rounded-2xl blur opacity-75 group-hover:opacity-100 transition-opacity"></div>
-                )}
-              </button>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Category Selection - Amazon Style */}
+          <div className="py-8" id="categories">
+            <div className="mb-8">
+              <h2 className="text-2xl font-bold text-gray-900 mb-6">Shop by Category</h2>
               
-              <button
-                onClick={() => handleCategoryClick('electronics')}
-                className={`group relative px-8 py-4 rounded-2xl font-semibold transition-all duration-300 transform hover:scale-105 ${
-                  activeCategory === 'electronics'
-                    ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-xl'
-                    : 'bg-white text-gray-700 hover:bg-gray-50 shadow-lg border border-gray-200'
-                }`}
-              >
-                <span className="relative z-10">⚡ Electronics</span>
-                {activeCategory === 'electronics' && (
-                  <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-blue-600 rounded-2xl blur opacity-75 group-hover:opacity-100 transition-opacity"></div>
-                )}
-              </button>
+              <div className="flex space-x-4">
+                <button
+                  onClick={() => handleCategoryClick('products')}
+                  className={`px-6 py-3 rounded-md font-medium transition-all duration-200 ${
+                    activeCategory === 'products'
+                      ? 'bg-orange-500 text-white shadow-md'
+                      : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50 shadow-sm'
+                  }`}
+                >
+                  Products
+                </button>
+                
+                <button
+                  onClick={() => handleCategoryClick('electronics')}
+                  className={`px-6 py-3 rounded-md font-medium transition-all duration-200 ${
+                    activeCategory === 'electronics'
+                      ? 'bg-orange-500 text-white shadow-md'
+                      : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50 shadow-sm'
+                  }`}
+                >
+                  Electronics
+                </button>
+              </div>
             </div>
           </div>
 
-          {/* Products Section with Enhanced Animations */}
+          {/* Products Section */}
           <div className="pb-12" id="featured-products">
-            {/* Container for heading, search, and cart button */}
-            <div className="flex justify-between items-center mb-8">
+            {/* Header with Search and Cart */}
+            <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center mb-8 gap-4">
               <div>
-                <h2 className="text-black text-3xl font-bold mb-2 animate-fade-in-left">
-                  {activeCategory === 'products' ? '🌟 Featured Products' : '⚡ Smart Electronics'}
+                <h2 className="text-2xl font-bold text-gray-900 mb-1">
+                  {activeCategory === 'products' ? 'Featured Products' : 'Electronics'}
                 </h2>
-                <div className={`w-32 h-1 rounded-full animate-fade-in-left animation-delay-200 ${
-                  activeCategory === 'products' 
-                    ? 'bg-gradient-to-r from-green-400 to-green-600' 
-                    : 'bg-gradient-to-r from-blue-400 to-blue-600'
-                }`}></div>
+                <p className="text-gray-600">
+                  {activeCategory === 'products' 
+                    ? 'Sustainable products for everyday life' 
+                    : 'Smart electronics for modern living'
+                  }
+                </p>
               </div>
 
-              {/* Enhanced Search Input */}
-              <div className="ml-8 relative group">
-                <div className="absolute inset-0 bg-gradient-to-r from-green-400 to-blue-500 rounded-full blur opacity-25 group-hover:opacity-50 transition-opacity"></div>
-                <div className="relative p-5 overflow-hidden w-[60px] h-[60px] hover:w-[300px] bg-white shadow-xl rounded-full flex group items-center hover:duration-500 duration-300 border border-gray-100">
-                  <div className="flex items-center justify-center fill-gray-600">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      id="Isolation_Mode"
-                      data-name="Isolation Mode"
-                      viewBox="0 0 24 24"
-                      width="22"
-                      height="22">
-                      <path d="M18.9,16.776A10.539,10.539,0,1,0,16.776,18.9l5.1,5.1L24,21.88ZM10.5,18A7.5,7.5,0,1,1,18,10.5,7.507,7.507,0,0,1,10.5,18Z"></path>
+              <div className="flex items-center space-x-4">
+                {/* Professional Search Bar */}
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <svg className="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                     </svg>
                   </div>
                   <input
                     type="text"
-                    className="outline-none text-[18px] bg-transparent w-full text-gray-800 font-normal px-4 placeholder-gray-400"
+                    className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-orange-500 focus:border-orange-500 text-sm"
                     value={searchQuery}
                     onChange={handleSearchInputChange}
-                    placeholder="Search eco-friendly products..."
+                    placeholder="Search products..."
                   />
                 </div>
-              </div>
 
-              {/* Enhanced Cart Button */}
-              <div 
-                className='group relative w-14 h-14 bg-white rounded-2xl flex justify-center items-center cursor-pointer shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-110 border border-gray-100' 
-                onClick={handleOpenTabCart}
-              >
-                <div className="absolute inset-0 bg-gradient-to-r from-green-400 to-blue-500 rounded-2xl opacity-0 group-hover:opacity-20 transition-opacity"></div>
-                <img src={iconCart} alt="Cart" className='w-7 relative z-10 filter group-hover:brightness-110 transition-all' />
-                {totalQuantity > 0 && (
-                  <span className='absolute -top-2 -right-2 bg-gradient-to-r from-red-500 to-pink-500 text-white text-xs w-7 h-7 rounded-full flex justify-center items-center font-bold shadow-lg animate-pulse'>
-                    {totalQuantity}
-                  </span>
-                )}
+                {/* Modern Cart Button */}
+                <button
+                  onClick={handleOpenTabCart}
+                  className="relative p-3 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-orange-500 transition-colors"
+                >
+                  <img src={iconCart} alt="Cart" className="w-6 h-6" />
+                  {totalQuantity > 0 && (
+                    <span className="absolute -top-2 -right-2 bg-orange-500 text-white text-xs w-6 h-6 rounded-full flex items-center justify-center font-medium">
+                      {totalQuantity}
+                    </span>
+                  )}
+                </button>
               </div>
             </div>
 
-            {/* Products Grid with Stagger Animation */}
-            <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-6 p-8">
+            {/* Products Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {getCurrentProducts().map((product, index) => (
                 <div 
                   key={product.id} 
-                  className="animate-fade-in-up"
-                  style={{ animationDelay: `${index * 100}ms` }}
+                  className="opacity-0 animate-fade-in"
+                  style={{ animationDelay: `${index * 50}ms`, animationFillMode: 'forwards' }}
                 >
                   <ProductCart
                     data={product}
@@ -244,66 +232,65 @@ function Homescene() {
               ))}
             </div>
 
-            {/* Enhanced View All Button */}
+            {/* View All Button */}
             <div className="text-center mt-12">
               <Link
                 to={activeCategory === 'products' ? '/products' : '/electronics'}
-                className={`group relative inline-block px-10 py-4 font-bold text-white rounded-2xl transition-all duration-300 transform hover:scale-105 shadow-xl hover:shadow-2xl ${
-                  activeCategory === 'products'
-                    ? 'bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700'
-                    : 'bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700'
-                }`}
+                className="inline-flex items-center px-8 py-3 bg-orange-500 text-white font-medium rounded-md hover:bg-orange-600 transition-colors shadow-sm"
               >
-                <span className="relative z-10">
-                  Explore All {activeCategory === 'products' ? 'Products' : 'Electronics'} →
-                </span>
-                <div className={`absolute inset-0 rounded-2xl blur opacity-75 group-hover:opacity-100 transition-opacity ${
-                  activeCategory === 'products'
-                    ? 'bg-gradient-to-r from-green-400 to-green-600'
-                    : 'bg-gradient-to-r from-blue-400 to-blue-600'
-                }`}></div>
+                View All {activeCategory === 'products' ? 'Products' : 'Electronics'}
+                <svg className="ml-2 w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
               </Link>
             </div>
           </div>
 
-          {/* Enhanced Why Choose Us Section */}
-          <div className="py-20 bg-gradient-to-br from-gray-50 to-white -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-            {/* Background Pattern */}
-            <div className="absolute inset-0 opacity-5">
-              <div className="absolute top-0 left-0 w-96 h-96 bg-green-500 rounded-full mix-blend-multiply filter blur-xl animate-blob"></div>
-              <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500 rounded-full mix-blend-multiply filter blur-xl animate-blob animation-delay-2000"></div>
-              <div className="absolute bottom-0 left-1/2 w-96 h-96 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl animate-blob animation-delay-4000"></div>
-            </div>
-            
-            <div className="max-w-6xl mx-auto relative z-10">
-              <div className="text-center mb-16">
-                <h2 className="text-4xl font-bold text-black mb-4 animate-fade-in-up">Why Choose EcoFinds?</h2>
-                <div className="w-32 h-1 bg-gradient-to-r from-green-400 to-blue-500 mx-auto rounded-full"></div>
+          {/* Why Choose Us Section */}
+          <div className="py-16 bg-white -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 border-t border-gray-100">
+            <div className="max-w-6xl mx-auto">
+              <div className="text-center mb-12">
+                <h2 className="text-2xl font-bold text-gray-900 mb-4">Why Choose EcoFinds?</h2>
+                <p className="text-gray-600 max-w-2xl mx-auto">
+                  We're committed to providing sustainable products that make a positive impact on the environment
+                </p>
               </div>
               
               <div className="grid md:grid-cols-3 gap-8">
-                <div className="group text-center p-8 bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105 border border-gray-100">
-                  <div className="w-20 h-20 bg-gradient-to-br from-green-400 to-green-600 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
-                    <span className="text-3xl">🌱</span>
+                <div className="text-center p-6">
+                  <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg className="w-8 h-8 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                    </svg>
                   </div>
-                  <h3 className="text-xl font-bold mb-4 text-black">100% Eco-Friendly</h3>
-                  <p className="text-gray-600 leading-relaxed">Carefully curated sustainable products that help protect our planet for future generations</p>
+                  <h3 className="text-lg font-semibold mb-3 text-gray-900">100% Eco-Friendly</h3>
+                  <p className="text-gray-600 text-sm leading-relaxed">
+                    Carefully curated sustainable products that help protect our planet for future generations
+                  </p>
                 </div>
                 
-                <div className="group text-center p-8 bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105 border border-gray-100">
-                  <div className="w-20 h-20 bg-gradient-to-br from-blue-400 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
-                    <span className="text-3xl">🚚</span>
+                <div className="text-center p-6">
+                  <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg className="w-8 h-8 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
                   </div>
-                  <h3 className="text-xl font-bold mb-4 text-black">Lightning Fast Delivery</h3>
-                  <p className="text-gray-600 leading-relaxed">Carbon-neutral shipping with biodegradable packaging delivered straight to your door</p>
+                  <h3 className="text-lg font-semibold mb-3 text-gray-900">Fast Delivery</h3>
+                  <p className="text-gray-600 text-sm leading-relaxed">
+                    Carbon-neutral shipping with sustainable packaging delivered quickly to your door
+                  </p>
                 </div>
                 
-                <div className="group text-center p-8 bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105 border border-gray-100">
-                  <div className="w-20 h-20 bg-gradient-to-br from-purple-400 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
-                    <span className="text-3xl">�</span>
+                <div className="text-center p-6">
+                  <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg className="w-8 h-8 text-orange-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
                   </div>
-                  <h3 className="text-xl font-bold mb-4 text-black">Premium Quality</h3>
-                  <p className="text-gray-600 leading-relaxed">Best-in-class sustainable products at competitive prices with lifetime quality guarantee</p>
+                  <h3 className="text-lg font-semibold mb-3 text-gray-900">Premium Quality</h3>
+                  <p className="text-gray-600 text-sm leading-relaxed">
+                    High-quality sustainable products at competitive prices with excellent customer support
+                  </p>
                 </div>
               </div>
             </div>
@@ -314,12 +301,12 @@ function Homescene() {
         <CartTab />
       </div>
       
-      {/* Custom CSS for animations */}
+      {/* Simplified CSS for animations */}
       <style jsx>{`
-        @keyframes fade-in-up {
+        @keyframes fade-in {
           from {
             opacity: 0;
-            transform: translateY(30px);
+            transform: translateY(10px);
           }
           to {
             opacity: 1;
@@ -327,62 +314,8 @@ function Homescene() {
           }
         }
         
-        @keyframes fade-in-left {
-          from {
-            opacity: 0;
-            transform: translateX(-30px);
-          }
-          to {
-            opacity: 1;
-            transform: translateX(0);
-          }
-        }
-        
-        @keyframes shimmer {
-          0% { transform: translateX(-100%) skewX(-12deg); }
-          100% { transform: translateX(200%) skewX(-12deg); }
-        }
-        
-        @keyframes blob {
-          0%, 100% { transform: translate(0px, 0px) scale(1); }
-          33% { transform: translate(30px, -50px) scale(1.1); }
-          66% { transform: translate(-20px, 20px) scale(0.9); }
-        }
-        
-        .animate-fade-in-up {
-          animation: fade-in-up 0.6s ease-out forwards;
-        }
-        
-        .animate-fade-in-left {
-          animation: fade-in-left 0.6s ease-out forwards;
-        }
-        
-        .animate-shimmer {
-          animation: shimmer 2s infinite;
-        }
-        
-        .animate-blob {
-          animation: blob 7s infinite;
-        }
-        
-        .animation-delay-150 {
-          animation-delay: 150ms;
-        }
-        
-        .animation-delay-200 {
-          animation-delay: 200ms;
-        }
-        
-        .animation-delay-300 {
-          animation-delay: 300ms;
-        }
-        
-        .animation-delay-2000 {
-          animation-delay: 2s;
-        }
-        
-        .animation-delay-4000 {
-          animation-delay: 4s;
+        .animate-fade-in {
+          animation: fade-in 0.5s ease-out;
         }
       `}</style>
     </div>
