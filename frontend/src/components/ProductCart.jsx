@@ -96,9 +96,9 @@ const ProductCart = (props) => {
                     </div>
 
                     {/* Content Section - Clickable */}
-                    <Link to={`${basePath}/${id}`} className="flex-1 p-6 flex flex-col justify-between hover:bg-gray-50 transition-colors">
+                    <Link to={`${basePath}/${id}`} className="flex-1 p-6 flex flex-col justify-between hover:bg-gradient-to-r hover:from-purple-50 hover:to-indigo-50 transition-all duration-300">
                         <div>
-                            <h3 className="text-lg font-semibold text-gray-900 hover:text-blue-600 transition-colors mb-2 line-clamp-2">
+                            <h3 className="text-lg font-semibold text-gray-900 hover:text-purple-600 transition-colors mb-2 line-clamp-2">
                                 {name}
                             </h3>
 
@@ -135,7 +135,7 @@ const ProductCart = (props) => {
                                 handleAddToCart();
                             }}
                             disabled={isAddingToCart}
-                            className="flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white px-6 py-2.5 rounded-lg transition-all duration-200 font-medium"
+                            className="flex items-center space-x-2 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 disabled:from-purple-400 disabled:to-indigo-400 text-white px-6 py-2.5 rounded-lg transition-all duration-200 font-medium shadow-md hover:shadow-lg"
                         >
                             {isAddingToCart ? (
                                 <>
@@ -193,8 +193,8 @@ const ProductCart = (props) => {
             </button>
 
             {/* Product Info - Clickable */}
-            <Link to={`${basePath}/${id}`} className="block p-5 hover:bg-gray-50 transition-colors">
-                <h3 className="font-semibold text-gray-900 group-hover:text-blue-600 transition-colors mb-2 line-clamp-2 leading-tight">
+            <Link to={`${basePath}/${id}`} className="block p-5 hover:bg-gradient-to-r hover:from-purple-50 hover:to-indigo-50 transition-all duration-300">
+                <h3 className="font-semibold text-gray-900 group-hover:text-purple-600 transition-colors mb-2 line-clamp-2 leading-tight">
                     {name}
                 </h3>
 
@@ -230,7 +230,7 @@ const ProductCart = (props) => {
                         handleAddToCart();
                     }}
                     disabled={isAddingToCart}
-                    className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white py-2.5 rounded-lg transition-all duration-200 font-medium flex items-center justify-center space-x-2"
+                    className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 disabled:from-purple-400 disabled:to-indigo-400 text-white py-2.5 rounded-lg transition-all duration-200 font-medium flex items-center justify-center space-x-2 shadow-md hover:shadow-lg transform hover:scale-[1.02]"
                 >
                     {isAddingToCart ? (
                         <>
