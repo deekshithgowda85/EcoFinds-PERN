@@ -3,16 +3,37 @@ import Navbar from '../components/Navbar';
 import { Link } from 'react-router-dom';
 import { apiService } from '../services/api';
 import ProductCart from '../components/ProductCart';
-import MainBanner from '../components/MainBanner';
+import { useSelector, useDispatch } from 'react-redux';
+import { toggleStatusTab } from '../stores/Cart';
+import { setSearchQuery } from '../stores/Search';
+import CartTab from '../components/CartTab';
 import Footer from '../components/Footer';
 
 function ProductPage() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [totalQuantity, setTotalQuantity] = useState(0);
   const [sortBy, setSortBy] = useState('featured');
   const [viewMode, setViewMode] = useState('grid');
   const [priceRange, setPriceRange] = useState('all');
+  
+  const carts = useSelector(store => store.cart.items);
+  const dispatch = useDispatch();
+  const searchQuery = useSelector(store => store.search.searchQuery);
+
+  useEffect(() => {
+    let total = 0;
+    carts.forEach(item => total += item.quantity);
+    setTotalQuantity(total);
+  }, [carts]);
+
+  const handleOpenTabCart = () => {
+    console.log('Cart button clicked!');
+    dispatch(toggleStatusTab());
+  };
+
+   
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -33,7 +54,9 @@ function ProductPage() {
   }, []);
 
   const getFilteredAndSortedProducts = () => {
-    let filtered = products;
+    let filtered = products.filter(product =>
+      product.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
 
     // Apply price filter
     if (priceRange !== 'all') {
@@ -68,16 +91,16 @@ function ProductPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-emerald-50">
         <Navbar />
         <div className="flex justify-center items-center h-screen">
           <div className="text-center">
             <div className="relative mb-8">
-              <div className="w-16 h-16 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin mx-auto"></div>
-              <div className="absolute inset-0 w-12 h-12 border-4 border-transparent border-t-indigo-400 rounded-full animate-spin animation-delay-150 mx-auto mt-2 ml-2"></div>
+              <div className="w-16 h-16 border-4 border-slate-200 border-t-emerald-600 rounded-full animate-spin mx-auto"></div>
+              <div className="absolute inset-0 w-12 h-12 border-4 border-transparent border-t-emerald-400 rounded-full animate-spin animation-delay-150 mx-auto mt-2 ml-2"></div>
             </div>
-            <h2 className="text-2xl font-bold text-gray-800 mb-2">Loading Products</h2>
-            <p className="text-gray-600 animate-pulse">Discovering amazing products for you...</p>
+            <h2 className="text-2xl font-bold text-slate-800 mb-2">Loading Products</h2>
+            <p className="text-slate-600 animate-pulse">Discovering amazing products for you...</p>
           </div>
         </div>
       </div>
@@ -95,11 +118,11 @@ function ProductPage() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
               </svg>
             </div>
-            <h2 className="text-xl font-bold text-gray-800 mb-2">Oops! Something went wrong</h2>
+            <h2 className="text-xl font-bold text-slate-800 mb-2">Oops! Something went wrong</h2>
             <p className="text-red-500 mb-6">{error}</p>
             <button 
               onClick={() => window.location.reload()}
-              className="px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-xl hover:from-blue-600 hover:to-indigo-700 transition-all duration-300 transform hover:scale-105 shadow-lg"
+              className="px-6 py-3 bg-gradient-to-r from-emerald-600 to-emerald-700 text-white rounded-xl hover:from-emerald-700 hover:to-emerald-800 transition-all duration-300 transform hover:scale-105 shadow-lg"
             >
               Try Again
             </button>
@@ -110,47 +133,28 @@ function ProductPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-emerald-50">
       <Navbar />
 
-      {/* Hero Section with Breadcrumbs */}
-      <div className="bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-700 text-white">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="text-center">
-            <nav className="text-sm mb-4 opacity-80">
-              <Link to="/" className="hover:text-blue-200 transition-colors">Home</Link>
-              <span className="mx-2">›</span>
-              <span>Products</span>
-            </nav>
-            <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-white to-blue-100 bg-clip-text text-transparent">
-              Featured Products
-            </h1>
-            <p className="text-xl text-blue-100 max-w-2xl mx-auto">
-              Discover our carefully curated collection of premium products designed for modern living
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 pt-8">
         {/* Enhanced Controls Bar */}
-        <div className="sticky top-0 z-40 bg-white/80 backdrop-blur-lg border-b border-gray-200 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-4 mb-8">
+        <div className="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-4 mb-8">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
             
             {/* Left Side - Results Count & View Toggle */}
             <div className="flex items-center space-x-6">
-              <div className="text-sm text-gray-600">
-                <span className="font-semibold text-gray-900">{filteredProducts.length}</span> products found
+              <div className="text-sm text-slate-600">
+                <span className="font-semibold text-slate-900">{filteredProducts.length}</span> products found
               </div>
               
               {/* View Mode Toggle */}
-              <div className="flex items-center bg-gray-100 rounded-lg p-1">
+              <div className="flex items-center bg-slate-100 rounded-lg p-1">
                 <button
                   onClick={() => setViewMode('grid')}
                   className={`p-2 rounded-md transition-all duration-200 ${
                     viewMode === 'grid' 
-                      ? 'bg-white text-purple-600 shadow-sm' 
-                      : 'text-gray-500 hover:text-purple-600'
+                      ? 'bg-white text-blue-600 shadow-sm' 
+                      : 'text-gray-500 hover:text-gray-700'
                   }`}
                   title="Grid View"
                 >
@@ -162,8 +166,8 @@ function ProductPage() {
                   onClick={() => setViewMode('list')}
                   className={`p-2 rounded-md transition-all duration-200 ${
                     viewMode === 'list' 
-                      ? 'bg-white text-purple-600 shadow-sm' 
-                      : 'text-gray-500 hover:text-purple-600'
+                      ? 'bg-white text-blue-600 shadow-sm' 
+                      : 'text-gray-500 hover:text-gray-700'
                   }`}
                   title="List View"
                 >
@@ -174,13 +178,16 @@ function ProductPage() {
               </div>
             </div>
 
-            {/* Right Side - Filters & Cart */}
+            {/* Center - Search Bar */}
+             
+
+            {/* Right Side - Filters */}
             <div className="flex items-center space-x-4">
               {/* Sort Dropdown */}
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                className="px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               >
                 <option value="featured">Featured</option>
                 <option value="priceLow">Price: Low to High</option>
@@ -193,7 +200,7 @@ function ProductPage() {
               <select
                 value={priceRange}
                 onChange={(e) => setPriceRange(e.target.value)}
-                className="px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                className="px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               >
                 <option value="all">All Prices</option>
                 <option value="under25">Under $25</option>
@@ -201,7 +208,6 @@ function ProductPage() {
                 <option value="50to100">$50 - $100</option>
                 <option value="over100">Over $100</option>
               </select>
-
             </div>
           </div>
         </div>
@@ -210,13 +216,13 @@ function ProductPage() {
         <div className="pb-12">
           {filteredProducts.length === 0 ? (
             <div className="text-center py-20">
-              <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                <svg className="w-12 h-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <div className="w-24 h-24 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <svg className="w-12 h-12 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
               </div>
-              <h3 className="text-xl font-semibold text-gray-600 mb-2">No products found</h3>
-              <p className="text-gray-500">Try adjusting your search or filters</p>
+              <h3 className="text-xl font-semibold text-slate-600 mb-2">No products found</h3>
+              <p className="text-slate-500">Try adjusting your search or filters</p>
             </div>
           ) : (
             <div className={`${
@@ -246,18 +252,26 @@ function ProductPage() {
           )}
         </div>
 
-        {/* Load More Button (if needed) */}
+        {/* Load More Button */}
         {filteredProducts.length > 0 && (
           <div className="text-center pb-12">
-            <button className="px-8 py-4 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-2xl hover:from-purple-700 hover:to-indigo-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl font-semibold">
+            <button className="px-8 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-2xl hover:from-blue-600 hover:to-indigo-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl font-semibold">
               Load More Products
             </button>
           </div>
         )}
       </div>
 
-      {/* Custom Styles */}
+      <CartTab />
+
       <style jsx>{`
+        .line-clamp-2 {
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+        }
+
         @keyframes fadeInUp {
           from {
             opacity: 0;
@@ -273,12 +287,10 @@ function ProductPage() {
           animation-delay: 150ms;
         }
 
-        /* Smooth scrolling */
         html {
           scroll-behavior: smooth;
         }
 
-        /* Custom scrollbar */
         ::-webkit-scrollbar {
           width: 8px;
         }
@@ -296,6 +308,7 @@ function ProductPage() {
           background: #94a3b8;
         }
       `}</style>
+      
       <Footer />
     </div>
   );
