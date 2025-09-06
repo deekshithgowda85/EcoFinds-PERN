@@ -149,8 +149,8 @@ function ProductPage() {
                   onClick={() => setViewMode('grid')}
                   className={`p-2 rounded-md transition-all duration-200 ${
                     viewMode === 'grid' 
-                      ? 'bg-white text-blue-600 shadow-sm' 
-                      : 'text-gray-500 hover:text-gray-700'
+                      ? 'bg-white text-purple-600 shadow-sm' 
+                      : 'text-gray-500 hover:text-purple-600'
                   }`}
                   title="Grid View"
                 >
@@ -162,8 +162,8 @@ function ProductPage() {
                   onClick={() => setViewMode('list')}
                   className={`p-2 rounded-md transition-all duration-200 ${
                     viewMode === 'list' 
-                      ? 'bg-white text-blue-600 shadow-sm' 
-                      : 'text-gray-500 hover:text-gray-700'
+                      ? 'bg-white text-purple-600 shadow-sm' 
+                      : 'text-gray-500 hover:text-purple-600'
                   }`}
                   title="List View"
                 >
@@ -180,7 +180,7 @@ function ProductPage() {
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
               >
                 <option value="featured">Featured</option>
                 <option value="priceLow">Price: Low to High</option>
@@ -193,7 +193,7 @@ function ProductPage() {
               <select
                 value={priceRange}
                 onChange={(e) => setPriceRange(e.target.value)}
-                className="px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
               >
                 <option value="all">All Prices</option>
                 <option value="under25">Under $25</option>
@@ -249,7 +249,7 @@ function ProductPage() {
         {/* Load More Button (if needed) */}
         {filteredProducts.length > 0 && (
           <div className="text-center pb-12">
-            <button className="px-8 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-2xl hover:from-blue-600 hover:to-indigo-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl font-semibold">
+            <button className="px-8 py-4 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-2xl hover:from-purple-700 hover:to-indigo-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl font-semibold">
               Load More Products
             </button>
           </div>
