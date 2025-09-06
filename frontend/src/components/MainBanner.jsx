@@ -2,11 +2,10 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import whiteArrowIcon from '../assets/white_arrow_icon.svg'
 import blackArrowIcon from '../assets/black_arrow_icon.svg'
-import electronicsbg from '../assets/electronicsbg.png';
 
 const MainBanner = () => {
   return (
-    <div className='relative h-[80vh] overflow-hidden flex items-center justify-center bg-gradient-to-r from-green-100 via-blue-50 to-green-100 mt-0 z-10 border-b border-gray-200'>
+    <div className='relative h-[80vh] overflow-hidden flex items-center justify-between bg-gradient-to-r from-green-100 via-blue-50 to-green-100 mt-0 z-10 border-b border-gray-200'>
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-10">
         <div className="w-full h-full" style={{
@@ -15,16 +14,8 @@ const MainBanner = () => {
         }}></div>
       </div>
       
-      <img
-        src={electronicsbg}
-        alt="Main Banner"
-        className='w-auto h-[70vh] object-contain z-20 opacity-90'
-        onError={(e) => {
-          e.target.style.display = 'none';
-        }}
-      />
-
-      <div className='absolute inset-0 flex items-center p-6 md:px-12 lg:px-24 z-30'>
+      {/* Content on the left */}
+      <div className='flex items-center p-6 md:px-12 lg:px-24 z-30 flex-1'>
         <div className='flex flex-col items-start max-w-2xl'>
           <div className="mb-4">
             <span className="inline-block px-4 py-2 bg-green-500 text-white text-sm font-semibold rounded-full">
@@ -50,6 +41,18 @@ const MainBanner = () => {
             </Link>
           </div>
         </div>
+      </div>
+
+      {/* Image on the right */}
+      <div className='flex items-center justify-center z-20 flex-1 p-6'>
+        <img
+          src="/bannner.jpg"
+          alt="Main Banner"
+          className='w-auto h-[70vh] object-contain opacity-90'
+          onError={(e) => {
+            e.target.style.display = 'none';
+          }}
+        />
       </div>
     </div>
   )
