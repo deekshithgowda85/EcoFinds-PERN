@@ -20,6 +20,7 @@ import OrderSummaryConfirm from './pages/OrderSummaryConfirm';
 import PaymentDetails from './pages/PaymentDetails';
 import OrderSuccessPage from './pages/OrderSuccessPage';
 import Electronics from './pages/Electronics';
+import CartTab from './components/CartTab';
 
 function App() {
   return (
@@ -62,6 +63,9 @@ function App() {
           <Route path="/admin/users" element={<UserManagement />} />
         </Route>
       </Routes>
+      
+      {/* Global Cart Tab */}
+      <CartTab />
     </AuthProvider>
   );
 }

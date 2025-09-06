@@ -1,25 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import iconCart from '../assets/images/iconCart.png'
 import { useSelector, useDispatch } from 'react-redux'
-import { toggleStatusTab } from '../stores/Cart'
 import { setSearchQuery } from '../stores/Search'
 
 const Header = () => {
-    const [totalQuantity, setTotalQuantity] = useState(0);
-    const carts = useSelector(store => store.cart.items);
     const dispatch = useDispatch();
     const searchQuery = useSelector(store => store.search.searchQuery);
-
-    useEffect(() => {
-        let total = 0;
-        carts.forEach(item => total += item.quantity);
-        setTotalQuantity(total);
-    }, [carts])
-
-    const handleOpenTabCart = () => {
-        dispatch(toggleStatusTab());
-    }
 
     const handleSearchInputChange = (event) => {
         dispatch(setSearchQuery(event.target.value));
@@ -27,9 +13,6 @@ const Header = () => {
 
     return (
         <header className='flex justify-between items-center py-4 px-6'>
-
-
-
             <div
                 className="ml-8 p-5 overflow-hidden w-[60px] h-[60px] hover:w-[270px] bg-gray-700 shadow-[2px_2px_20px_rgba(0,0,0,0.08)] rounded-full flex group items-center hover:duration-300 duration-300"
             >
@@ -50,16 +33,6 @@ const Header = () => {
                     value={searchQuery}
                     onChange={handleSearchInputChange}
                 />
-            </div>
-
-            {/* Cart Icon on Right */}
-            <div className='w-10 h-10 bg-gray-100 rounded-full flex justify-center items-center relative cursor-pointer ml-auto' onClick={handleOpenTabCart}>
-                <img src={iconCart} alt="Cart" className='w-6' />
-                {totalQuantity > 0 && (
-                    <span className='absolute -top-1 -right-1 bg-red-500 text-white text-xs w-5 h-5 rounded-full flex justify-center items-center'>
-                        {totalQuantity}
-                    </span>
-                )}
             </div>
         </header>
     )

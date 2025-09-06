@@ -1,14 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import { Link } from 'react-router-dom';
-import { FaShoppingCart } from 'react-icons/fa';
 import { apiService } from '../services/api';
 import ProductCart from '../components/ProductCart';
-import { useSelector, useDispatch } from 'react-redux';
-import { toggleStatusTab } from '../stores/Cart';
-import iconCart from '../assets/images/iconCart.png';
-import { setSearchQuery } from '../stores/Search';
-import CartTab from '../components/CartTab';
 import MainBanner from '../components/MainBanner';
 import Footer from '../components/Footer';
 
@@ -16,29 +10,9 @@ function ProductPage() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [totalQuantity, setTotalQuantity] = useState(0);
   const [sortBy, setSortBy] = useState('featured');
   const [viewMode, setViewMode] = useState('grid');
   const [priceRange, setPriceRange] = useState('all');
-  
-  const carts = useSelector(store => store.cart.items);
-  const dispatch = useDispatch();
-  const searchQuery = useSelector(store => store.search.searchQuery);
-
-  useEffect(() => {
-    let total = 0;
-    carts.forEach(item => total += item.quantity);
-    setTotalQuantity(total);
-  }, [carts]);
-
-  const handleOpenTabCart = () => {
-    console.log('Cart button clicked!');
-    dispatch(toggleStatusTab());
-  };
-
-  const handleSearchInputChange = (event) => {
-    dispatch(setSearchQuery(event.target.value));
-  };
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -59,9 +33,7 @@ function ProductPage() {
   }, []);
 
   const getFilteredAndSortedProducts = () => {
-    let filtered = products.filter(product =>
-      product.name.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+    let filtered = products;
 
     // Apply price filter
     if (priceRange !== 'all') {
@@ -202,29 +174,6 @@ function ProductPage() {
               </div>
             </div>
 
-            {/* Center - Search Bar */}
-            <div className="flex-1 max-w-md mx-auto lg:mx-0">
-              <div className="relative group">
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-500 rounded-2xl blur opacity-25 group-hover:opacity-40 transition-opacity"></div>
-                <div className="relative bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
-                  <div className="flex items-center">
-                    <div className="pl-4 pr-2">
-                      <svg className="w-5 h-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                      </svg>
-                    </div>
-                    <input
-                      type="text"
-                      className="flex-1 py-3 pr-4 text-gray-700 placeholder-gray-400 bg-transparent focus:outline-none focus:ring-0"
-                      value={searchQuery}
-                      onChange={handleSearchInputChange}
-                      placeholder="Search products..."
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-
             {/* Right Side - Filters & Cart */}
             <div className="flex items-center space-x-4">
               {/* Sort Dropdown */}
@@ -253,19 +202,6 @@ function ProductPage() {
                 <option value="over100">Over $100</option>
               </select>
 
-              {/* Enhanced Cart Button */}
-              <button
-                onClick={handleOpenTabCart}
-                className="relative group p-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-xl hover:from-blue-600 hover:to-indigo-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
-              >
-                <img src={iconCart} alt="Cart" className="w-6 h-6 filter brightness-0 invert" />
-                {totalQuantity > 0 && (
-                  <span className="absolute -top-2 -right-2 bg-gradient-to-r from-red-500 to-pink-500 text-white text-xs w-6 h-6 rounded-full flex items-center justify-center font-bold shadow-lg animate-bounce">
-                    {totalQuantity}
-                  </span>
-                )}
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-indigo-500 rounded-xl blur opacity-0 group-hover:opacity-50 transition-opacity -z-10"></div>
-              </button>
             </div>
           </div>
         </div>
@@ -319,9 +255,6 @@ function ProductPage() {
           </div>
         )}
       </div>
-
-      {/* Enhanced CartTab */}
-      <CartTab />
 
       {/* Custom Styles */}
       <style jsx>{`

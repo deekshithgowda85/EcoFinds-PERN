@@ -1,15 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { apiService } from '../services/api';
-import { toggleStatusTab } from '../stores/Cart';
-import { setSearchQuery } from '../stores/Search';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import ProductCart from '../components/ProductCart';
-import CartTab from '../components/CartTab';
 import MainBanner from '../components/MainBanner';
-import iconCart from '../assets/images/iconCart.png';
 
 function Homescene() {
   const [products, setProducts] = useState([]);
@@ -17,18 +13,10 @@ function Homescene() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [activeCategory, setActiveCategory] = useState('products');
-  const [totalQuantity, setTotalQuantity] = useState(0);
   const [showContent, setShowContent] = useState(false);
   
-  const carts = useSelector(store => store.cart.items);
-  const dispatch = useDispatch();
+  // Get search query from Redux store
   const searchQuery = useSelector(store => store.search.searchQuery);
-
-  useEffect(() => {
-    let total = 0;
-    carts.forEach(item => total += item.quantity);
-    setTotalQuantity(total);
-  }, [carts]);
 
   // Intro animation effect
   useEffect(() => {
@@ -37,14 +25,6 @@ function Homescene() {
     }, 500);
     return () => clearTimeout(timer);
   }, []);
-
-  const handleOpenTabCart = () => {
-    dispatch(toggleStatusTab());
-  };
-
-  const handleSearchInputChange = (event) => {
-    dispatch(setSearchQuery(event.target.value));
-  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -76,6 +56,9 @@ function Homescene() {
 
   const getCurrentProducts = () => {
     const currentData = activeCategory === 'products' ? products : electronics;
+    if (!searchQuery) {
+      return currentData;
+    }
     return currentData.filter(product =>
       product.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
@@ -191,9 +174,6 @@ function Homescene() {
                   }`}
                 >
                   <div className="flex items-center space-x-3">
-                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-                    </svg>
                     <span>Products</span>
                   </div>
                 </button>
@@ -207,9 +187,6 @@ function Homescene() {
                   }`}
                 >
                   <div className="flex items-center space-x-3">
-                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                    </svg>
                     <span>Electronics</span>
                   </div>
                 </button>
@@ -219,8 +196,8 @@ function Homescene() {
 
           {/* Enhanced Products Section */}
           <div className="pb-16" id="featured-products">
-            {/* Enhanced Header with Search and Cart */}
-            <div className="flex flex-col lg:flex-row lg:justify-between lg:items-end mb-10 gap-6">
+            {/* Enhanced Header */}
+            <div className="mb-10">
               <div className="space-y-2">
                 <h2 className="text-3xl font-bold text-slate-900">
                   {activeCategory === 'products' ? 'Featured Products' : 'Smart Electronics'}
@@ -231,47 +208,6 @@ function Homescene() {
                     : 'Innovative electronics for the modern world'
                   }
                 </p>
-              </div>
-
-              <div className="flex items-center space-x-4">
-                {/* Enhanced Search Bar */}
-                <div className="relative group">
-                  <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                    <svg className="h-5 w-5 text-slate-400 group-focus-within:text-emerald-500 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                    </svg>
-                  </div>
-                  <input
-                    type="text"
-                    className="block w-80 pl-12 pr-4 py-3 border border-slate-200 rounded-2xl leading-5 bg-white/80 backdrop-blur-sm placeholder-slate-500 focus:outline-none focus:placeholder-slate-400 focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 text-sm transition-all duration-300 shadow-sm hover:shadow-md"
-                    value={searchQuery}
-                    onChange={handleSearchInputChange}
-                    placeholder={`Search ${activeCategory}...`}
-                  />
-                  {searchQuery && (
-                    <button
-                      onClick={() => dispatch(setSearchQuery(''))}
-                      className="absolute inset-y-0 right-0 pr-4 flex items-center"
-                    >
-                      <svg className="h-4 w-4 text-slate-400 hover:text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                      </svg>
-                    </button>
-                  )}
-                </div>
-
-                {/* Enhanced Cart Button */}
-                <button
-                  onClick={handleOpenTabCart}
-                  className="relative p-4 bg-white border border-slate-200 rounded-2xl hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 transition-all duration-300 shadow-sm hover:shadow-md group"
-                >
-                  <img src={iconCart} alt="Cart" className="w-6 h-6 group-hover:scale-110 transition-transform" />
-                  {totalQuantity > 0 && (
-                    <span className="absolute -top-2 -right-2 bg-gradient-to-r from-emerald-500 to-emerald-600 text-white text-xs w-7 h-7 rounded-full flex items-center justify-center font-bold shadow-lg animate-pulse">
-                      {totalQuantity}
-                    </span>
-                  )}
-                </button>
               </div>
             </div>
 
@@ -378,9 +314,6 @@ function Homescene() {
             </div>
           </div>
         </div>
-
-        {/* Render CartTab */}
-        <CartTab />
         
         {/* Footer */}
         <Footer />

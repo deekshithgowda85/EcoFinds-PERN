@@ -1,17 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAppContext } from '../context/Appcontext';
 import { useAuth } from '../context/AuthContext';
 import { useSelector, useDispatch } from 'react-redux';
 import { setSearchQuery } from '../stores/Search';
+import { toggleStatusTab } from '../stores/Cart';
 
 function Navbar() {
   const { user } = useAppContext();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const searchQuery = useSelector(store => store.search.searchQuery);
+  const carts = useSelector(store => store.cart.items);
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [totalQuantity, setTotalQuantity] = useState(0);
+
+  useEffect(() => {
+    let total = 0;
+    carts.forEach(item => total += item.quantity);
+    setTotalQuantity(total);
+  }, [carts]);
 
   const handleSearchChange = (e) => {
     dispatch(setSearchQuery(e.target.value));
@@ -19,6 +28,10 @@ function Navbar() {
 
   const clearSearch = () => {
     dispatch(setSearchQuery(''));
+  };
+
+  const handleOpenTabCart = () => {
+    dispatch(toggleStatusTab());
   };
 
   return (
@@ -85,6 +98,21 @@ function Navbar() {
 
             {/* User Menu */}
             <div className="flex items-center space-x-4">
+              {/* Cart Button */}
+              <button
+                onClick={handleOpenTabCart}
+                className="relative p-2 text-gray-700 hover:text-slate-800 hover:bg-slate-100 rounded-lg transition-all duration-200"
+              >
+                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-3 2m3-2v4a2 2 0 002 2h8a2 2 0 002-2v-4" />
+                </svg>
+                {totalQuantity > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-emerald-600 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-medium">
+                    {totalQuantity}
+                  </span>
+                )}
+              </button>
+
               {/* Profile/Login */}
               {!user ? (
                 <Link 
