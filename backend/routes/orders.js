@@ -10,7 +10,7 @@ console.log('Orders router loaded');
 const DeliveryAddress = require('../models/DeliveryAddress');
 const Order = require('../models/Order');
 const OrderItem = require('../models/OrderItem');
-const { Product, Grocery } = require('../models/Product');
+const { Product, Electronics } = require('../models/Product');
 
 // Function to fetch product price securely using Sequelize models
 async function getProductDetails(productId, source) {
@@ -20,8 +20,8 @@ async function getProductDetails(productId, source) {
     try {
         if (source === 'products') {
             model = Product;
-        } else if (source === 'groceries') {
-            model = Grocery;
+        } else if (source === 'electronics') {
+            model = Electronics;
         } else {
             return null;
         }
@@ -115,7 +115,7 @@ router.get('/', authenticateToken, async (req, res) => {
                 attributes: ['product_id', 'product_source', 'quantity', 'price'],
                 include: [
                     { model: Product, as: 'product', attributes: ['name'], required: false },
-                    { model: Grocery, as: 'grocery', attributes: ['name'], required: false }
+                    { model: Electronics, as: 'electronics', attributes: ['name'], required: false }
                 ]
             }],
             order: [['order_date', 'DESC']]
@@ -131,8 +131,8 @@ router.get('/', authenticateToken, async (req, res) => {
                 let productName = 'Unknown Product';
                 if (item.product_source === 'products' && item.product) {
                     productName = item.product.name;
-                } else if (item.product_source === 'groceries' && item.grocery) {
-                    productName = item.grocery.name;
+                } else if (item.product_source === 'electronics' && item.electronics) {
+                    productName = item.electronics.name;
                 }
 
                 return {
@@ -153,6 +153,102 @@ router.get('/', authenticateToken, async (req, res) => {
             message: 'Failed to fetch user orders',
             error: error.message,
             stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
+        });
+    }
+});
+
+// GET /api/orders/dashboard - Dashboard data endpoint
+router.get('/dashboard', authenticateToken, async (req, res) => {
+    try {
+        // Get all orders
+        const allOrders = await Order.findAll({
+            include: [{
+                model: OrderItem,
+                as: 'items',
+                attributes: ['product_id', 'product_source', 'quantity', 'price']
+            }]
+        });
+
+        // Get product and electronics counts
+        const totalProducts = await Product.count();
+        const totalElectronics = await Electronics.count();
+
+        // Calculate dashboard statistics
+        const totalRevenue = allOrders.reduce((sum, order) => sum + parseFloat(order.total_amount), 0);
+        const totalOrders = allOrders.length;
+        const completedOrders = allOrders.filter(order => order.status === 'completed');
+        const completedOrdersCount = completedOrders.length;
+        
+        // Calculate products and electronics sold
+        let productsSoldCount = 0;
+        let electronicsSoldCount = 0;
+        
+        allOrders.forEach(order => {
+            order.items.forEach(item => {
+                if (item.product_source === 'products') {
+                    productsSoldCount += item.quantity;
+                } else if (item.product_source === 'electronics') {
+                    electronicsSoldCount += item.quantity;
+                }
+            });
+        });
+
+        // Get recent orders (last 10)
+        const recentOrders = await Order.findAll({
+            include: [{
+                model: OrderItem,
+                as: 'items',
+                attributes: ['product_id', 'product_source', 'quantity', 'price'],
+                include: [
+                    { model: Product, as: 'product', attributes: ['name'], required: false },
+                    { model: Electronics, as: 'electronics', attributes: ['name'], required: false }
+                ]
+            }],
+            order: [['order_date', 'DESC']],
+            limit: 10
+        });
+
+        // Format recent orders
+        const formattedRecentOrders = recentOrders.map(order => ({
+            id: order.id,
+            totalAmount: order.total_amount,
+            status: order.status,
+            createdAt: order.order_date,
+            items: order.items.map(item => {
+                let productName = 'Unknown Product';
+                if (item.product_source === 'products' && item.product) {
+                    productName = item.product.name;
+                } else if (item.product_source === 'electronics' && item.electronics) {
+                    productName = item.electronics.name;
+                }
+
+                return {
+                    productId: item.product_id,
+                    productSource: item.product_source,
+                    productName: productName,
+                    quantity: item.quantity,
+                    price: item.price
+                };
+            })
+        }));
+
+        res.json({
+            totalRevenue,
+            totalOrders,
+            completedOrdersCount,
+            productsSoldCount,
+            electronicsSoldCount,
+            totalProducts,
+            totalElectronics,
+            totalUsers: 100, // You can implement user counting if needed
+            recentOrders: formattedRecentOrders
+        });
+
+    } catch (error) {
+        console.error('Error fetching dashboard data:', error);
+        res.status(500).json({
+            message: 'Failed to fetch dashboard data',
+            error: error.message
         });
     }
 });

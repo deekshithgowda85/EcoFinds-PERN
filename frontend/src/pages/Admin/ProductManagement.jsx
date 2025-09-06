@@ -313,53 +313,48 @@ const ProductManagement = () => {
                         {/* Existing Products List */}
                         <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
                             <h3 className="text-xl font-semibold mb-6">Existing Products</h3>
-                            <div className="overflow-x-auto">
-                                <table className="min-w-full divide-y divide-gray-200">
-                                    <thead>
-                                        <tr>
-                                            <th className="px-6 py-4 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">Image</th>
-                                            <th className="px-6 py-4 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">Name</th>
-                                            <th className="px-6 py-4 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">Price</th>
-                                            <th className="px-6 py-4 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">Description</th>
-                                            <th className="px-6 py-4 text-right text-sm font-medium text-gray-500 uppercase tracking-wider">Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody className="divide-y divide-gray-200 bg-white">
-                                        {products.map(product => (
-                                            <tr key={product.id} className="hover:bg-gray-50">
-                                                <td className="px-6 py-4 whitespace-nowrap">
-                                                    <img
-                                                        src={product.image}
-                                                        alt={product.name}
-                                                        className="h-20 w-20 object-cover rounded-lg shadow-sm"
-                                                        onError={(e) => {
-                                                            console.error('Image failed to load:', product.image);
-                                                            e.target.src = 'https://via.placeholder.com/64?text=No+Image';
-                                                        }}
-                                                    />
-                                                </td>
-                                                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{product.name}</td>
-                                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${product.price}</td>
-                                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 overflow-hidden text-ellipsis max-w-sm">{product.description}</td>
-                                                <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                            {products.length === 0 ? (
+                                <div className="text-center py-8">
+                                    <p className="text-gray-500">No products found. Add your first product above.</p>
+                                </div>
+                            ) : (
+                                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                                    {products.map(product => (
+                                        <div key={product.id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+                                            <div className="aspect-w-1 aspect-h-1 w-full bg-gray-200">
+                                                <img
+                                                    src={product.image}
+                                                    alt={product.name}
+                                                    className="w-full h-48 object-cover"
+                                                    onError={(e) => {
+                                                        console.error('Image failed to load:', product.image);
+                                                        e.target.src = 'https://via.placeholder.com/300x200?text=No+Image';
+                                                    }}
+                                                />
+                                            </div>
+                                            <div className="p-4">
+                                                <h4 className="text-lg font-semibold text-gray-900 mb-2 truncate">{product.name}</h4>
+                                                <p className="text-xl font-bold text-green-600 mb-2">${product.price}</p>
+                                                <p className="text-sm text-gray-600 mb-4 line-clamp-2">{product.description}</p>
+                                                <div className="flex justify-between gap-2">
                                                     <button
                                                         onClick={() => handleEdit(product, 'product')}
-                                                        className="text-blue-600 hover:text-blue-800 mr-4 font-medium"
+                                                        className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-3 rounded-lg text-sm transition-colors duration-200"
                                                     >
                                                         Edit
                                                     </button>
                                                     <button
                                                         onClick={() => handleDelete(product.id, 'product')}
-                                                        className="text-red-600 hover:text-red-800 font-medium"
+                                                        className="flex-1 bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-3 rounded-lg text-sm transition-colors duration-200"
                                                     >
                                                         Delete
                                                     </button>
-                                                </td>
-                                            </tr>
-                                        ))}
-                                    </tbody>
-                                </table>
-                            </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
                         </div>
                     </div>
                 </section>
@@ -451,53 +446,48 @@ const ProductManagement = () => {
                         {/* Existing Electronics List */}
                         <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
                             <h3 className="text-xl font-semibold mb-6">Existing Electronics Items</h3>
-                            <div className="overflow-x-auto">
-                                <table className="min-w-full divide-y divide-gray-200">
-                                    <thead>
-                                        <tr>
-                                            <th className="px-6 py-4 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">Image</th>
-                                            <th className="px-6 py-4 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">Name</th>
-                                            <th className="px-6 py-4 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">Price</th>
-                                            <th className="px-6 py-4 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">Description</th>
-                                            <th className="px-6 py-4 text-right text-sm font-medium text-gray-500 uppercase tracking-wider">Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody className="divide-y divide-gray-200 bg-white">
-                                        {electronics.map(electronic => (
-                                            <tr key={electronic.id} className="hover:bg-gray-50">
-                                                <td className="px-6 py-4 whitespace-nowrap">
-                                                    <img
-                                                        src={electronic.image}
-                                                        alt={electronic.name}
-                                                        className="h-20 w-20 object-cover rounded-lg shadow-sm"
-                                                        onError={(e) => {
-                                                            console.error('Image failed to load:', electronic.image);
-                                                            e.target.src = 'https://via.placeholder.com/64?text=No+Image';
-                                                        }}
-                                                    />
-                                                </td>
-                                                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{electronic.name}</td>
-                                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${electronic.price}</td>
-                                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 overflow-hidden text-ellipsis max-w-sm">{electronic.description}</td>
-                                                <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                            {electronics.length === 0 ? (
+                                <div className="text-center py-8">
+                                    <p className="text-gray-500">No electronics items found. Add your first electronics item above.</p>
+                                </div>
+                            ) : (
+                                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                                    {electronics.map(electronic => (
+                                        <div key={electronic.id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+                                            <div className="aspect-w-1 aspect-h-1 w-full bg-gray-200">
+                                                <img
+                                                    src={electronic.image}
+                                                    alt={electronic.name}
+                                                    className="w-full h-48 object-cover"
+                                                    onError={(e) => {
+                                                        console.error('Image failed to load:', electronic.image);
+                                                        e.target.src = 'https://via.placeholder.com/300x200?text=No+Image';
+                                                    }}
+                                                />
+                                            </div>
+                                            <div className="p-4">
+                                                <h4 className="text-lg font-semibold text-gray-900 mb-2 truncate">{electronic.name}</h4>
+                                                <p className="text-xl font-bold text-green-600 mb-2">${electronic.price}</p>
+                                                <p className="text-sm text-gray-600 mb-4 line-clamp-2">{electronic.description}</p>
+                                                <div className="flex justify-between gap-2">
                                                     <button
                                                         onClick={() => handleEdit(electronic, 'electronics')}
-                                                        className="text-blue-600 hover:text-blue-800 mr-4 font-medium"
+                                                        className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-3 rounded-lg text-sm transition-colors duration-200"
                                                     >
                                                         Edit
                                                     </button>
                                                     <button
                                                         onClick={() => handleDelete(electronic.id, 'electronics')}
-                                                        className="text-red-600 hover:text-red-800 font-medium"
+                                                        className="flex-1 bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-3 rounded-lg text-sm transition-colors duration-200"
                                                     >
                                                         Delete
                                                     </button>
-                                                </td>
-                                            </tr>
-                                        ))}
-                                    </tbody>
-                                </table>
-                            </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
                         </div>
                     </div>
                 </section>
