@@ -85,20 +85,25 @@ function Homescene() {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-emerald-50 flex items-center justify-center">
         <div className="text-center p-8">
-          <div className="relative mb-8">
-            <div className="w-20 h-20 border-4 border-slate-200 border-t-emerald-500 rounded-full animate-spin mx-auto"></div>
-            <div className="absolute inset-0 w-16 h-16 border-4 border-transparent border-t-emerald-300 rounded-full animate-spin mx-auto mt-2 ml-2"></div>
+          <div className="relative mb-8 flex justify-center">
+            <div className="spinner">
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
           </div>
           <div className="space-y-3">
             <h2 className="text-2xl font-bold bg-gradient-to-r from-emerald-600 to-emerald-700 bg-clip-text text-transparent">
               EcoFinds
             </h2>
             <p className="text-slate-600 font-medium">Loading sustainable products...</p>
-            <div className="flex justify-center space-x-1 mt-4">
-              <div className="w-2 h-2 bg-emerald-500 rounded-full animate-bounce"></div>
-              <div className="w-2 h-2 bg-emerald-500 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-              <div className="w-2 h-2 bg-emerald-500 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
-            </div>
           </div>
         </div>
       </div>
@@ -130,20 +135,26 @@ function Homescene() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-emerald-50">
       {/* Enhanced Intro Animation Overlay */}
-      <div className={`fixed inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-emerald-900 z-50 flex items-center justify-center transition-all duration-1000 ease-out ${showContent ? 'opacity-0 pointer-events-none scale-110' : 'opacity-100 scale-100'}`}>
-        <div className="text-center text-white">
-          <div className="relative mb-8">
-            <div className="w-24 h-24 bg-gradient-to-r from-emerald-500 to-emerald-600 rounded-full flex items-center justify-center mx-auto shadow-2xl">
-              <svg className="w-12 h-12" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-              </svg>
+      <div className={`fixed inset-0 bg-gradient-to-br from-white via-gray-50 to-emerald-50 z-50 flex items-center justify-center transition-all duration-1000 ease-out ${showContent ? 'opacity-0 pointer-events-none scale-110' : 'opacity-100 scale-100'}`}>
+        <div className="text-center text-gray-800">
+          <div className="relative mb-8 flex justify-center">
+            <div className="spinner intro-spinner">
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
             </div>
-            <div className="absolute inset-0 w-24 h-24 bg-emerald-400 rounded-full animate-ping opacity-20 mx-auto"></div>
           </div>
-          <h2 className="text-3xl font-bold mb-3 bg-gradient-to-r from-emerald-400 to-emerald-300 bg-clip-text text-transparent">
+          <h2 className="text-3xl font-bold mb-3 bg-gradient-to-r from-emerald-600 to-emerald-700 bg-clip-text text-transparent">
             EcoFinds
           </h2>
-          <p className="text-slate-300 text-lg font-medium">Discover Sustainable Products</p>
+          <p className="text-gray-600 text-lg font-medium">Discover Sustainable Products</p>
           <div className="mt-6 w-32 h-1 bg-gradient-to-r from-emerald-500 to-emerald-400 rounded-full mx-auto"></div>
         </div>
       </div>
@@ -406,6 +417,96 @@ function Homescene() {
 
         .animate-bounce-gentle {
           animation: bounce-gentle 2s infinite;
+        }
+
+        .spinner {
+          position: relative;
+          width: 30px;
+          height: 30px;
+        }
+
+        .spinner div {
+          position: absolute;
+          width: 30%;
+          height: 150%;
+          background: #ffffff;
+          transform: rotate(calc(var(--rotation) * 1deg)) translate(0, calc(var(--translation) * 1%));
+          animation: spinner-fzua35 1s calc(var(--delay) * 1s) infinite ease;
+          border-radius: 2px;
+        }
+
+        .intro-spinner div {
+          background: #10b981;
+        }
+
+        .spinner div:nth-child(1) {
+          --delay: 0.1;
+          --rotation: 36;
+          --translation: 150;
+        }
+
+        .spinner div:nth-child(2) {
+          --delay: 0.2;
+          --rotation: 72;
+          --translation: 150;
+        }
+
+        .spinner div:nth-child(3) {
+          --delay: 0.3;
+          --rotation: 108;
+          --translation: 150;
+        }
+
+        .spinner div:nth-child(4) {
+          --delay: 0.4;
+          --rotation: 144;
+          --translation: 150;
+        }
+
+        .spinner div:nth-child(5) {
+          --delay: 0.5;
+          --rotation: 180;
+          --translation: 150;
+        }
+
+        .spinner div:nth-child(6) {
+          --delay: 0.6;
+          --rotation: 216;
+          --translation: 150;
+        }
+
+        .spinner div:nth-child(7) {
+          --delay: 0.7;
+          --rotation: 252;
+          --translation: 150;
+        }
+
+        .spinner div:nth-child(8) {
+          --delay: 0.8;
+          --rotation: 288;
+          --translation: 150;
+        }
+
+        .spinner div:nth-child(9) {
+          --delay: 0.9;
+          --rotation: 324;
+          --translation: 150;
+        }
+
+        .spinner div:nth-child(10) {
+          --delay: 1;
+          --rotation: 360;
+          --translation: 150;
+        }
+
+        @keyframes spinner-fzua35 {
+          0%, 10%, 20%, 30%, 40%, 60%, 70%, 80%, 90%, 100% {
+            transform: rotate(calc(var(--rotation) * 1deg)) translate(0, calc(var(--translation) * 1%));
+          }
+
+          50% {
+            transform: rotate(calc(var(--rotation) * 1deg)) translate(0, calc(var(--translation) * 1.5%));
+          }
         }
       `}</style>
     </div>

@@ -5,10 +5,13 @@ import { addToCart } from '../stores/Cart';
 import Navbar from '../components/Navbar';
 import { apiService } from '../services/api';
 import Footer from '../components/Footer';
+import ProductCart from '../components/ProductCart';
 
 const Detail = () => {
     const { id } = useParams();
     const [detail, setDetail] = useState(null);
+    const [relatedProducts, setRelatedProducts] = useState([]);
+    const [relatedElectronics, setRelatedElectronics] = useState([]);
     const navigate = useNavigate();
     const [quantity, setQuantity] = useState(1);
     const [loading, setLoading] = useState(true);
@@ -16,15 +19,36 @@ const Detail = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        const fetchGrocery = async () => {
+        const fetchData = async () => {
             try {
                 setLoading(true);
+                // Fetch main product
                 const response = await apiService.getGrocery(id);
                 if (response && response.data) {
                     setDetail(response.data);
                     setError(null);
                 } else {
                     setError('Grocery item not found');
+                }
+
+                // Fetch related products and electronics
+                try {
+                    const [productsRes, electronicsRes] = await Promise.all([
+                        apiService.getProducts(),
+                        apiService.getElectronics()
+                    ]);
+                    
+                    // Get random 4 items from each
+                    if (productsRes?.data) {
+                        const shuffled = [...productsRes.data].sort(() => 0.5 - Math.random());
+                        setRelatedProducts(shuffled.slice(0, 4));
+                    }
+                    if (electronicsRes?.data) {
+                        const shuffled = [...electronicsRes.data].sort(() => 0.5 - Math.random());
+                        setRelatedElectronics(shuffled.slice(0, 4));
+                    }
+                } catch (relatedError) {
+                    console.error('Error fetching related items:', relatedError);
                 }
             } catch (err) {
                 console.error('Error fetching grocery:', err);
@@ -35,7 +59,7 @@ const Detail = () => {
         };
 
         if (id) {
-            fetchGrocery();
+            fetchData();
         } else {
             setError('Invalid grocery ID');
             setLoading(false);
@@ -114,22 +138,22 @@ const Detail = () => {
                     &larr; Back to Groceries
                 </button>
 
-                <div className='grid grid-cols-1 md:grid-cols-2 gap-8'>
+                <div className='grid grid-cols-1 lg:grid-cols-3 gap-8'>
                     <div className="bg-white p-4 rounded-lg shadow-md">
                         <img
                             src={detail.image?.startsWith('http') ? detail.image : `http://localhost:5000${detail.image}`}
                             alt={detail.name}
-                            className='w-full h-auto object-contain rounded-lg'
+                            className='w-full h-64 object-cover rounded-lg'
                             onError={(e) => {
                                 console.error('Image failed to load:', detail.image);
-                                e.target.src = 'https://via.placeholder.com/400x300?text=No+Image';
+                                e.target.src = 'https://via.placeholder.com/300x250?text=No+Image';
                             }}
                         />
                     </div>
-                    <div className='flex flex-col gap-5 bg-white p-6 rounded-lg shadow-md'>
-                        <h2 className='text-xl text-gray-600'>GROCERY DETAIL</h2>
-                        <h1 className='text-4xl font-bold text-gray-900'>{detail.name}</h1>
-                        <p className='font-bold text-3xl text-blue-600'>
+                    <div className='lg:col-span-2 flex flex-col gap-4 bg-white p-6 rounded-lg shadow-md'>
+                        <h2 className='text-lg text-gray-600'>PRODUCT DETAIL</h2>
+                        <h1 className='text-3xl font-bold text-gray-900'>{detail.name}</h1>
+                        <p className='font-bold text-2xl text-blue-600'>
                             ${detail.price}
                         </p>
                         <div className='flex gap-4 items-center mt-4'>
@@ -162,6 +186,43 @@ const Detail = () => {
                             </p>
                         </div>
                     </div>
+                </div>
+
+                {/* Related Products Section */}
+                <div className="mt-12">
+                    <h2 className="text-2xl font-bold text-gray-900 mb-6">You Might Also Like</h2>
+                    
+                    {/* Related Products */}
+                    {relatedProducts.length > 0 && (
+                        <div className="mb-8">
+                            <h3 className="text-xl font-semibold text-gray-800 mb-4">Products</h3>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                                {relatedProducts.map((product, key) => (
+                                    <ProductCart 
+                                        key={key} 
+                                        data={product} 
+                                        source="products"
+                                    />
+                                ))}
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Related Electronics */}
+                    {relatedElectronics.length > 0 && (
+                        <div>
+                            <h3 className="text-xl font-semibold text-gray-800 mb-4">Electronics</h3>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                                {relatedElectronics.map((electronic, key) => (
+                                    <ProductCart 
+                                        key={key} 
+                                        data={electronic} 
+                                        source="electronics"
+                                    />
+                                ))}
+                            </div>
+                        </div>
+                    )}
                 </div>
             </div>
             <Footer />
