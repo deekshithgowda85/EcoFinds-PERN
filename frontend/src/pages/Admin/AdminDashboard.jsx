@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import AdminNavbar from '../../components/AdminNavbar';
 import axios from 'axios';
+import Footer from '../../components/Footer';
 
 const AdminDashboard = () => {
     const [dashboardData, setDashboardData] = useState({
@@ -290,6 +291,7 @@ const AdminDashboard = () => {
                     </div>
                 </section>
             </div>
+            <Footer />
         </div>
     );
 };

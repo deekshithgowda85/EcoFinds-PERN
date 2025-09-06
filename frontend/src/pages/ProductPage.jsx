@@ -10,6 +10,7 @@ import iconCart from '../assets/images/iconCart.png';
 import { setSearchQuery } from '../stores/Search';
 import CartTab from '../components/CartTab';
 import MainBanner from '../components/MainBanner';
+import Footer from '../components/Footer';
 
 function ProductPage() {
   const [products, setProducts] = useState([]);
@@ -362,6 +363,7 @@ function ProductPage() {
           background: #94a3b8;
         }
       `}</style>
+      <Footer />
     </div>
   );
 }

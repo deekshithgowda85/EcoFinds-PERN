@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAppContext } from '../context/Appcontext';
 import { useAuth } from '../context/AuthContext';
 import { authService } from '../services/api';
+import Footer from '../components/Footer';
 
 // Icons for enhanced UI
 import { 

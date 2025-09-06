@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import AdminNavbar from '../../components/AdminNavbar';
 import { apiService } from '../../services/api';
+import Footer from '../../components/Footer';
 
 const UserManagement = () => {
     const [users, setUsers] = useState([]);
@@ -125,6 +126,7 @@ const UserManagement = () => {
                     </div>
                 </section>
             </div>
+            <Footer />
         </div>
     );
 };

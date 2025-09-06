@@ -5,6 +5,7 @@ import { apiService } from '../services/api';
 import { toggleStatusTab } from '../stores/Cart';
 import { setSearchQuery } from '../stores/Search';
 import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 import ProductCart from '../components/ProductCart';
 import CartTab from '../components/CartTab';
 import MainBanner from '../components/MainBanner';
@@ -299,6 +300,9 @@ function Homescene() {
 
         {/* Render CartTab */}
         <CartTab />
+        
+        {/* Footer */}
+        <Footer />
       </div>
       
       {/* Simplified CSS for animations */}

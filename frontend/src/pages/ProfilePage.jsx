@@ -32,6 +32,7 @@ import {
 import { useAppContext } from '../context/Appcontext';
 import { useAuth } from '../context/AuthContext';
 import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 import CartItem from '../components/CartItem';
 import { apiService } from '../services/api';
 
@@ -596,6 +597,7 @@ function ProfilePage() {
                                             <div className="p-6 border-t border-slate-200 bg-white">
                                                 {/* Order Items */}
                                                 <div className="space-y-4 mb-6">
+                                                    <h5 className="font-semibold text-slate-800 text-sm uppercase tracking-wide">Order Items</h5>
                                                     {order.items?.map((item, index) => (
                                                         <div key={index} className="flex items-center space-x-4 p-4 bg-slate-50 rounded-lg">
                                                             <div className="w-16 h-16 bg-slate-200 rounded-lg flex-shrink-0 flex items-center justify-center">
@@ -612,6 +614,48 @@ function ProfilePage() {
                                                         </div>
                                                     ))}
                                                 </div>
+
+                                                {/* Delivery Address Information */}
+                                                {order.deliveryAddress && (
+                                                    <div className="mb-6 p-4 bg-emerald-50 rounded-lg border border-emerald-200">
+                                                        <h5 className="font-semibold text-emerald-800 text-sm uppercase tracking-wide mb-3 flex items-center">
+                                                            <FaMapMarkerAlt className="mr-2" />
+                                                            Delivery Address
+                                                        </h5>
+                                                        <div className="grid md:grid-cols-2 gap-4 text-sm">
+                                                            <div>
+                                                                <p className="text-slate-700">
+                                                                    <strong className="text-emerald-800">Name:</strong> {order.deliveryAddress.name}
+                                                                </p>
+                                                                <p className="text-slate-700 mt-1">
+                                                                    <strong className="text-emerald-800">Address:</strong> {order.deliveryAddress.address}
+                                                                </p>
+                                                                <p className="text-slate-700 mt-1">
+                                                                    <strong className="text-emerald-800">City:</strong> {order.deliveryAddress.city}
+                                                                </p>
+                                                                <p className="text-slate-700 mt-1">
+                                                                    <strong className="text-emerald-800">Country:</strong> {order.deliveryAddress.country}
+                                                                </p>
+                                                            </div>
+                                                            <div>
+                                                                {order.deliveryAddress.phone && (
+                                                                    <p className="text-slate-700 flex items-center">
+                                                                        <FaPhone className="mr-2 text-emerald-600" />
+                                                                        <strong className="text-emerald-800">Phone:</strong> 
+                                                                        <span className="ml-1">{order.deliveryAddress.phone}</span>
+                                                                    </p>
+                                                                )}
+                                                                {order.deliveryAddress.email && (
+                                                                    <p className="text-slate-700 flex items-center mt-1">
+                                                                        <FaEnvelope className="mr-2 text-emerald-600" />
+                                                                        <strong className="text-emerald-800">Email:</strong> 
+                                                                        <span className="ml-1">{order.deliveryAddress.email}</span>
+                                                                    </p>
+                                                                )}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                )}
 
                                                 {/* Order Actions */}
                                                 <div className="flex flex-wrap gap-3 pt-4 border-t border-slate-200">
@@ -782,22 +826,8 @@ function ProfilePage() {
                     </motion.div>
                 </main>
 
-                {/* Footer Section */}
-                <footer className="mt-16 bg-white border-t border-slate-200">
-                    <div className="max-w-6xl mx-auto px-4 py-8">
-                        <div className="text-center text-slate-500">
-                            <p className="mb-4">
-                                🌱 Thank you for choosing sustainable shopping with us!
-                            </p>
-                            <div className="flex justify-center space-x-6 text-sm">
-                                <button className="hover:text-emerald-600 transition-colors">Help Center</button>
-                                <button className="hover:text-emerald-600 transition-colors">Contact Support</button>
-                                <button className="hover:text-emerald-600 transition-colors">Privacy Policy</button>
-                                <button className="hover:text-emerald-600 transition-colors">Terms of Service</button>
-                            </div>
-                        </div>
-                    </div>
-                </footer>
+                {/* Footer */}
+                <Footer />
             </div>
         </>
     );

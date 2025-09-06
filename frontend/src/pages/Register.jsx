@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { authService } from '../services/api';
+import Footer from '../components/Footer';
 
 // Icons for enhanced UI
 import { 
@@ -477,6 +478,7 @@ function Register() {
           animation-delay: 2s;
         }
       `}</style>
+    
     </div>
   );
 }

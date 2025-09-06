@@ -58,16 +58,22 @@ router.post('/', authenticateToken, async (req, res) => {
 
         console.log('Calculated total amount:', totalAmount);
 
+        // Create delivery address record
+        const deliveryAddress = await DeliveryAddress.create({
+            name: deliveryInfo.name,
+            address: deliveryInfo.address,
+            city: deliveryInfo.city,
+            country: deliveryInfo.country,
+            phone: deliveryInfo.phone,
+            email: deliveryInfo.email
+        }, { transaction: t });
+
         // Create order in database
         const order = await Order.create({
             user_id: req.user.id,
+            delivery_address_id: deliveryAddress.id,
             total_amount: totalAmount,
-            status: 'pending',
-            deliveryName: deliveryInfo.name,
-            deliveryAddress: deliveryInfo.address,
-            deliveryCity: deliveryInfo.city,
-            deliveryCountry: deliveryInfo.country,
-            deliveryPhone: deliveryInfo.phone,
+            status: 'pending'
         }, { transaction: t });
 
         console.log('Created order:', order.id);
@@ -109,24 +115,39 @@ router.get('/', authenticateToken, async (req, res) => {
             where: {
                 user_id: req.user.id
             },
-            include: [{
-                model: OrderItem,
-                as: 'items',
-                attributes: ['product_id', 'product_source', 'quantity', 'price'],
-                include: [
-                    { model: Product, as: 'product', attributes: ['name'], required: false },
-                    { model: Electronics, as: 'electronics', attributes: ['name'], required: false }
-                ]
-            }],
+            include: [
+                {
+                    model: OrderItem,
+                    as: 'items',
+                    attributes: ['product_id', 'product_source', 'quantity', 'price'],
+                    include: [
+                        { model: Product, as: 'product', attributes: ['name'], required: false },
+                        { model: Electronics, as: 'electronics', attributes: ['name'], required: false }
+                    ]
+                },
+                {
+                    model: DeliveryAddress,
+                    attributes: ['name', 'address', 'city', 'country', 'phone', 'email'],
+                    required: false
+                }
+            ],
             order: [['order_date', 'DESC']]
         });
 
-        // Format the orders to include product names
+        // Format the orders to include product names and delivery address
         const formattedOrders = orders.map(order => ({
             id: order.id,
             totalAmount: order.total_amount,
             status: order.status,
             orderDate: order.order_date,
+            deliveryAddress: order.DeliveryAddress ? {
+                name: order.DeliveryAddress.name,
+                address: order.DeliveryAddress.address,
+                city: order.DeliveryAddress.city,
+                country: order.DeliveryAddress.country,
+                phone: order.DeliveryAddress.phone,
+                email: order.DeliveryAddress.email
+            } : null,
             items: order.items.map(item => {
                 let productName = 'Unknown Product';
                 if (item.product_source === 'products' && item.product) {
@@ -180,6 +201,11 @@ router.get('/dashboard', authenticateToken, async (req, res) => {
         const totalOrders = allOrders.length;
         const completedOrders = allOrders.filter(order => order.status === 'delivered');
         const completedOrdersCount = completedOrders.length;
+        
+        console.log('Dashboard stats debug:');
+        console.log('Total orders:', totalOrders);
+        console.log('Delivered orders:', completedOrdersCount);
+        console.log('All order statuses:', allOrders.map(o => o.status));
         
         // Calculate products and electronics sold (only from delivered orders)
         let productsSoldCount = 0;

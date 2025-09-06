@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { addToCart } from '../stores/Cart';
 import Navbar from '../components/Navbar';
 import { apiService } from '../services/api';
+import Footer from '../components/Footer';
 
 const Detail = () => {
     const { id } = useParams();
@@ -163,6 +164,7 @@ const Detail = () => {
                     </div>
                 </div>
             </div>
+            <Footer />
         </div>
     );
 }

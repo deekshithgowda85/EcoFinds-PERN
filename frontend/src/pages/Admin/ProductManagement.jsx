@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import AdminNavbar from '../../components/AdminNavbar';
 import axios from 'axios';
+import Footer from '../../components/Footer';
 
 const ProductManagement = () => {
     const [products, setProducts] = useState([]);
@@ -492,6 +493,7 @@ const ProductManagement = () => {
                     </div>
                 </section>
             </div>
+            <Footer />
         </div>
     );
 };
