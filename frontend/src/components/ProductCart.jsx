@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { addToCart } from '../stores/Cart';
-import { FaShoppingCart, FaHeart, FaEye, FaStar, FaStarHalfAlt } from 'react-icons/fa';
+import { FaShoppingCart, FaHeart, FaStar, FaStarHalfAlt } from 'react-icons/fa';
 
 const ProductCart = (props) => {
     const { id, name, price, image, rating = 4.5, reviews = 0, originalPrice, discount } = props.data;
@@ -95,14 +95,12 @@ const ProductCart = (props) => {
                         </button>
                     </div>
 
-                    {/* Content Section */}
-                    <div className="flex-1 p-6 flex flex-col justify-between">
+                    {/* Content Section - Clickable */}
+                    <Link to={`${basePath}/${id}`} className="flex-1 p-6 flex flex-col justify-between hover:bg-gray-50 transition-colors">
                         <div>
-                            <Link to={`${basePath}/${id}`} className="block">
-                                <h3 className="text-lg font-semibold text-gray-900 hover:text-blue-600 transition-colors mb-2 line-clamp-2">
-                                    {name}
-                                </h3>
-                            </Link>
+                            <h3 className="text-lg font-semibold text-gray-900 hover:text-blue-600 transition-colors mb-2 line-clamp-2">
+                                {name}
+                            </h3>
 
                             {/* Rating */}
                             <div className="flex items-center mb-3">
@@ -115,37 +113,42 @@ const ProductCart = (props) => {
                             </div>
                         </div>
 
-                        {/* Price and Action Section */}
-                        <div className="flex items-center justify-between">
-                            <div className="flex items-center space-x-2">
-                                <span className="text-2xl font-bold text-gray-900">
-                                    ${price}
+                        {/* Price Section */}
+                        <div className="flex items-center space-x-2">
+                            <span className="text-2xl font-bold text-gray-900">
+                                ${price}
+                            </span>
+                            {originalPrice && (
+                                <span className="text-lg text-gray-500 line-through">
+                                    ${originalPrice}
                                 </span>
-                                {originalPrice && (
-                                    <span className="text-lg text-gray-500 line-through">
-                                        ${originalPrice}
-                                    </span>
-                                )}
-                            </div>
-
-                            <button
-                                onClick={handleAddToCart}
-                                disabled={isAddingToCart}
-                                className="flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white px-6 py-2.5 rounded-lg transition-all duration-200 font-medium"
-                            >
-                                {isAddingToCart ? (
-                                    <>
-                                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                                        <span>Adding...</span>
-                                    </>
-                                ) : (
-                                    <>
-                                        <FaShoppingCart className="w-4 h-4" />
-                                        <span>Add to Cart</span>
-                                    </>
-                                )}
-                            </button>
+                            )}
                         </div>
+                    </Link>
+
+                    {/* Add to Cart Button - Separate from Link */}
+                    <div className="p-6 flex items-end">
+                        <button
+                            onClick={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                handleAddToCart();
+                            }}
+                            disabled={isAddingToCart}
+                            className="flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white px-6 py-2.5 rounded-lg transition-all duration-200 font-medium"
+                        >
+                            {isAddingToCart ? (
+                                <>
+                                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                                    <span>Adding...</span>
+                                </>
+                            ) : (
+                                <>
+                                    <FaShoppingCart className="w-4 h-4" />
+                                    <span>Add to Cart</span>
+                                </>
+                            )}
+                        </button>
                     </div>
                 </div>
             </div>
@@ -159,38 +162,18 @@ const ProductCart = (props) => {
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
         >
-            {/* Image Container */}
-            <div className="relative overflow-hidden">
-                <Link to={`${basePath}/${id}`} className="block">
-                    <div className="aspect-square w-full bg-gray-100">
-                        <img
-                            src={imageUrl}
-                            alt={name}
-                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                            onError={(e) => {
-                                e.target.onerror = null;
-                                e.target.src = 'https://via.placeholder.com/300x300?text=No+Image';
-                            }}
-                        />
-                    </div>
-                </Link>
-
-                {/* Overlay Actions */}
-                <div className={`absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-300 ${isHovered ? 'opacity-100' : 'opacity-0'}`}>
-                    <div className="absolute top-4 right-4 flex flex-col space-y-2">
-                        <button
-                            onClick={toggleFavorite}
-                            className="p-2 bg-white rounded-full shadow-md hover:bg-gray-50 transition-colors"
-                        >
-                            <FaHeart className={`w-4 h-4 ${isFavorite ? 'text-red-500' : 'text-gray-600'}`} />
-                        </button>
-                        <Link 
-                            to={`${basePath}/${id}`}
-                            className="p-2 bg-white rounded-full shadow-md hover:bg-gray-50 transition-colors"
-                        >
-                            <FaEye className="w-4 h-4 text-gray-600" />
-                        </Link>
-                    </div>
+            {/* Image Container - Clickable */}
+            <Link to={`${basePath}/${id}`} className="block relative overflow-hidden">
+                <div className="aspect-square w-full bg-gray-100">
+                    <img
+                        src={imageUrl}
+                        alt={name}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        onError={(e) => {
+                            e.target.onerror = null;
+                            e.target.src = 'https://via.placeholder.com/300x300?text=No+Image';
+                        }}
+                    />
                 </div>
 
                 {/* Discount Badge */}
@@ -199,36 +182,21 @@ const ProductCart = (props) => {
                         -{discountPercentage}%
                     </div>
                 )}
+            </Link>
 
-                {/* Quick Add Button - Shows on Hover */}
-                <div className={`absolute bottom-4 left-4 right-4 transition-all duration-300 ${isHovered ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}>
-                    <button
-                        onClick={handleAddToCart}
-                        disabled={isAddingToCart}
-                        className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white py-2.5 rounded-lg transition-all duration-200 font-medium flex items-center justify-center space-x-2"
-                    >
-                        {isAddingToCart ? (
-                            <>
-                                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                                <span>Adding...</span>
-                            </>
-                        ) : (
-                            <>
-                                <FaShoppingCart className="w-4 h-4" />
-                                <span>Quick Add</span>
-                            </>
-                        )}
-                    </button>
-                </div>
-            </div>
+            {/* Favorite Button - Outside of Link */}
+            <button
+                onClick={toggleFavorite}
+                className="absolute top-4 right-4 p-2 bg-white rounded-full shadow-md hover:bg-gray-50 transition-colors z-10"
+            >
+                <FaHeart className={`w-4 h-4 ${isFavorite ? 'text-red-500' : 'text-gray-600'}`} />
+            </button>
 
-            {/* Product Info */}
-            <div className="p-5">
-                <Link to={`${basePath}/${id}`} className="block">
-                    <h3 className="font-semibold text-gray-900 hover:text-blue-600 transition-colors mb-2 line-clamp-2 leading-tight">
-                        {name}
-                    </h3>
-                </Link>
+            {/* Product Info - Clickable */}
+            <Link to={`${basePath}/${id}`} className="block p-5 hover:bg-gray-50 transition-colors">
+                <h3 className="font-semibold text-gray-900 group-hover:text-blue-600 transition-colors mb-2 line-clamp-2 leading-tight">
+                    {name}
+                </h3>
 
                 {/* Rating */}
                 <div className="flex items-center mb-3">
@@ -241,24 +209,28 @@ const ProductCart = (props) => {
                 </div>
 
                 {/* Price Section */}
-                <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center space-x-2">
-                        <span className="text-xl font-bold text-gray-900">
-                            ${price}
+                <div className="flex items-center space-x-2 mb-4">
+                    <span className="text-xl font-bold text-gray-900">
+                        ${price}
+                    </span>
+                    {originalPrice && (
+                        <span className="text-sm text-gray-500 line-through">
+                            ${originalPrice}
                         </span>
-                        {originalPrice && (
-                            <span className="text-sm text-gray-500 line-through">
-                                ${originalPrice}
-                            </span>
-                        )}
-                    </div>
+                    )}
                 </div>
+            </Link>
 
-                {/* Add to Cart Button */}
+            {/* Add to Cart Button - Outside of Link */}
+            <div className="px-5 pb-5">
                 <button
-                    onClick={handleAddToCart}
+                    onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        handleAddToCart();
+                    }}
                     disabled={isAddingToCart}
-                    className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white py-2.5 rounded-lg transition-all duration-200 font-medium flex items-center justify-center space-x-2 group"
+                    className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white py-2.5 rounded-lg transition-all duration-200 font-medium flex items-center justify-center space-x-2"
                 >
                     {isAddingToCart ? (
                         <>
@@ -267,7 +239,7 @@ const ProductCart = (props) => {
                         </>
                     ) : (
                         <>
-                            <FaShoppingCart className="w-4 h-4 group-hover:scale-110 transition-transform" />
+                            <FaShoppingCart className="w-4 h-4" />
                             <span>Add to Cart</span>
                         </>
                     )}
