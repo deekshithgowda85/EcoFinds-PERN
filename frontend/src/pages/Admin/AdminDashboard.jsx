@@ -40,11 +40,11 @@ const AdminDashboard = () => {
         }
     };
 
-    const handleCompleteOrder = async (orderId) => {
+    const handleStatusChange = async (orderId, newStatus) => {
         try {
             const token = localStorage.getItem('token');
             await axios.put(`http://localhost:5000/api/orders/${orderId}/status`, 
-                { status: 'completed' },
+                { status: newStatus },
                 {
                     headers: {
                         'Authorization': `Bearer ${token}`,
@@ -54,10 +54,15 @@ const AdminDashboard = () => {
             );
             // Refresh dashboard data
             fetchDashboardData();
+            alert(`Order status updated to ${newStatus} successfully!`);
         } catch (error) {
-            console.error('Error completing order:', error);
-            alert('Failed to complete order');
+            console.error('Error updating order status:', error);
+            alert('Failed to update order status');
         }
+    };
+
+    const handleCompleteOrder = async (orderId) => {
+        await handleStatusChange(orderId, 'delivered');
     };
 
     if (loading) {
@@ -111,10 +116,11 @@ const AdminDashboard = () => {
                                 </div>
                                 <div className="text-green-600 text-sm font-medium">Revenue</div>
                             </div>
-                            <h3 className="text-lg font-semibold mb-2 text-gray-700">Total Revenue</h3>
+                            <h3 className="text-lg font-semibold mb-2 text-gray-700">Confirmed Revenue</h3>
                             <p className="text-2xl font-bold text-green-600">
                                 ${dashboardData.totalRevenue.toLocaleString()}
                             </p>
+                            <p className="text-xs text-gray-500 mt-1">From delivered orders</p>
                         </div>
 
                         {/* Total Orders Card */}
@@ -135,9 +141,9 @@ const AdminDashboard = () => {
                                 <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center">
                                     <span className="text-2xl">✅</span>
                                 </div>
-                                <div className="text-green-600 text-sm font-medium">Completed</div>
+                                <div className="text-green-600 text-sm font-medium">Delivered</div>
                             </div>
-                            <h3 className="text-lg font-semibold mb-2 text-gray-700">Orders Completed</h3>
+                            <h3 className="text-lg font-semibold mb-2 text-gray-700">Orders Delivered</h3>
                             <p className="text-2xl font-bold text-green-600">{dashboardData.completedOrdersCount}</p>
                         </div>
 
@@ -190,6 +196,7 @@ const AdminDashboard = () => {
                             <p className="text-xl font-bold text-indigo-600">
                                 {dashboardData.productsSoldCount + dashboardData.electronicsSoldCount}
                             </p>
+                            <p className="text-xs text-gray-500 mt-1">Delivered items</p>
                         </div>
                     </div>
                 </section>
@@ -236,10 +243,16 @@ const AdminDashboard = () => {
                                                 </td>
                                                 <td className="px-6 py-4 whitespace-nowrap">
                                                     <span className={`px-3 py-1 rounded-full text-xs font-medium ${
-                                                        order.status === 'completed' 
+                                                        order.status === 'delivered' 
                                                             ? 'bg-green-100 text-green-800' 
                                                             : order.status === 'pending'
                                                             ? 'bg-yellow-100 text-yellow-800'
+                                                            : order.status === 'processing'
+                                                            ? 'bg-blue-100 text-blue-800'
+                                                            : order.status === 'shipped'
+                                                            ? 'bg-purple-100 text-purple-800'
+                                                            : order.status === 'cancelled'
+                                                            ? 'bg-red-100 text-red-800'
                                                             : 'bg-gray-100 text-gray-800'
                                                     }`}>
                                                         {order.status || 'pending'}
@@ -249,13 +262,23 @@ const AdminDashboard = () => {
                                                     {order.createdAt ? new Date(order.createdAt).toLocaleDateString() : 'N/A'}
                                                 </td>
                                                 <td className="px-6 py-4 whitespace-nowrap">
-                                                    {order.status !== 'completed' && (
-                                                        <button
-                                                            onClick={() => handleCompleteOrder(order.id)}
-                                                            className="text-blue-600 hover:text-blue-800 font-medium"
-                                                        >
-                                                            Complete
-                                                        </button>
+                                                    {order.status !== 'delivered' && order.status !== 'cancelled' && (
+                                                        <div className="flex space-x-2">
+                                                            <select
+                                                                value={order.status}
+                                                                onChange={(e) => handleStatusChange(order.id, e.target.value)}
+                                                                className="text-sm border border-gray-300 rounded px-2 py-1 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                                            >
+                                                                <option value="pending">Pending</option>
+                                                                <option value="processing">Processing</option>
+                                                                <option value="shipped">Shipped</option>
+                                                                <option value="delivered">Delivered</option>
+                                                                <option value="cancelled">Cancelled</option>
+                                                            </select>
+                                                        </div>
+                                                    )}
+                                                    {(order.status === 'delivered' || order.status === 'cancelled') && (
+                                                        <span className="text-sm text-gray-500">No actions available</span>
                                                     )}
                                                 </td>
                                             </tr>

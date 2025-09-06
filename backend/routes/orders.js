@@ -174,16 +174,18 @@ router.get('/dashboard', authenticateToken, async (req, res) => {
         const totalElectronics = await Electronics.count();
 
         // Calculate dashboard statistics
-        const totalRevenue = allOrders.reduce((sum, order) => sum + parseFloat(order.total_amount), 0);
+        const totalRevenue = allOrders
+            .filter(order => order.status === 'delivered')
+            .reduce((sum, order) => sum + parseFloat(order.total_amount), 0);
         const totalOrders = allOrders.length;
-        const completedOrders = allOrders.filter(order => order.status === 'completed');
+        const completedOrders = allOrders.filter(order => order.status === 'delivered');
         const completedOrdersCount = completedOrders.length;
         
-        // Calculate products and electronics sold
+        // Calculate products and electronics sold (only from delivered orders)
         let productsSoldCount = 0;
         let electronicsSoldCount = 0;
         
-        allOrders.forEach(order => {
+        completedOrders.forEach(order => {
             order.items.forEach(item => {
                 if (item.product_source === 'products') {
                     productsSoldCount += item.quantity;
