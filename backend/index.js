@@ -47,7 +47,10 @@ app.use((err, req, res, next) => {
 const PORT = process.env.PORT || 5000;
 
 // Database connection and server start
+console.log('Starting database sync...');
 sequelize.sync({ alter: true }).then(async () => {
+    console.log('Database sync successful');
+    
     // Initialize model associations
     const models = {
         Order,
@@ -56,16 +59,20 @@ sequelize.sync({ alter: true }).then(async () => {
         Electronics
     };
 
+    console.log('Initializing model associations...');
     // Initialize associations for each model
     Object.values(models).forEach(model => {
         if (typeof model.initializeAssociations === 'function') {
+            console.log(`Initializing associations for ${model.name}`);
             model.initializeAssociations(models);
         }
     });
 
+    console.log('Verifying email configuration...');
     // Verify email configuration
     await verifyTransporter();
 
+    console.log('Initializing Supabase storage...');
     // Initialize Supabase Storage
     await initializeStorage();
 

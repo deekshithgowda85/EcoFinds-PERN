@@ -24,8 +24,8 @@ const CartTab = () => {
                         let response;
                         if (item.source === 'products') {
                             response = await apiService.getProduct(item.productId);
-                        } else if (item.source === 'groceries') {
-                            response = await apiService.getGrocery(item.productId);
+                        } else if (item.source === 'electronics') {
+                            response = await apiService.getElectronicsItem(item.productId);
                         }
 
                         if (response && response.data) {

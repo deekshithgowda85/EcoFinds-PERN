@@ -37,6 +37,10 @@ const DeliveryAddress = sequelize.define('DeliveryAddress', {
         type: DataTypes.STRING,
         allowNull: true, // Assuming phone can be optional
     },
+    email: {
+        type: DataTypes.STRING,
+        allowNull: true, // Email field for delivery contact
+    },
     // Sequelize automatically adds createdAt and updatedAt timestamps
 }, {
     tableName: 'delivery_addresses', // Explicitly set table name

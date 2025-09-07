@@ -17,8 +17,8 @@ const CartItem = ({ data, isReadOnly = false }) => {
                 let response;
                 if (data.source === 'products') {
                     response = await apiService.getProduct(data.productId);
-                } else if (data.source === 'groceries') {
-                    response = await apiService.getGrocery(data.productId);
+                } else if (data.source === 'electronics') {
+                    response = await apiService.getElectronicsItem(data.productId);
                 }
 
                 if (response && response.data) {

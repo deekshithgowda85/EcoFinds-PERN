@@ -60,6 +60,7 @@ router.post('/', authenticateToken, async (req, res) => {
 
         // Create delivery address record
         const deliveryAddress = await DeliveryAddress.create({
+            user_id: req.user.id,
             name: deliveryInfo.name,
             address: deliveryInfo.address,
             city: deliveryInfo.city,
