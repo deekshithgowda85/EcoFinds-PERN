@@ -10,7 +10,25 @@
 ![GitHub stars](https://img.shields.io/github/stars/Manu77211/ecofinds?style=for-the-badge)
 ![GitHub forks](https://img.shields.io/github/forks/Manu77211/ecofinds?style=for-the-badge)
 ![GitHub issues](https://img.shields.io/github/issues/Manu77211/ecofinds?style=for-the-badge)
-![GitHub license](https://img.shields.io/github/license/Manu77211/ecofinds?style=for-the-badge)
+![GitHub license](https://img.shields.io/github/license/Man## 💡 Contact & Support
+
+<div align="center">
+
+**Created with ❤️ by [Deekshith Gowda](https://github.com/deekshithgowda85)**
+
+[![GitHub](https://img.shields.io/badge/GitHub-deekshithgowda85-black?style=for-the-badge&logo=github)](https://github.com/deekshithgowda85)
+[![Project](https://img.shields.io/badge/Project-EcoFinds--PERN-green?style=for-the-badge&logo=github)](https://github.com/deekshithgowda85/EcoFinds-PERN)
+
+📧 For questions or support, please [open an issue](https://github.com/deekshithgowda85/EcoFinds-PERN/issues)
+
+**Connect with the Team:**
+
+- 🌟 **Star** the repository to show support
+- 🐛 **Report issues** for bugs or improvements
+- 💬 **Discussions** for questions and ideas
+- 🚀 **Fork** to contribute to the project
+
+</div>ofinds?style=for-the-badge)
 ![GitHub last commit](https://img.shields.io/github/last-commit/Manu77211/ecofinds?style=for-the-badge)
 
 ![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
@@ -518,12 +536,54 @@ If you found this project helpful, please consider:
 
 ---
 
-## 💡 Contact & Support
+## � Contributors & Credits
+
+### 🤝 **Project Contributors**
 
 <div align="center">
 
-**Created with ❤️ by [Manu77211](https://github.com/Manu77211)**
+| Contributor | GitHub Profile |
+| ----------- | -------------- |
+
+| **Manu77211** | [![GitHub](https://img.shields.io/badge/GitHub-Manu77211-black?style=flat&logo=github)](https://github.com/Manu77211) |
+| **devbharu** | [![GitHub](https://img.shields.io/badge/GitHub-devbharu-black?style=flat&logo=github)](https://github.com/devbharu) |
+| **Deekshith Gowda** | [![GitHub](https://img.shields.io/badge/GitHub-deekshithgowda85-black?style=flat&logo=github)](https://github.com/deekshithgowda85) |
+
+</div>
+
+### 🌟 **Special Thanks**
+
+We extend our gratitude to:
+
+- **🧠 AI Assistant**: For development guidance and code optimization
+- **🎨 Design Inspiration**: Modern e-commerce platforms and sustainable marketplace concepts
+- **📚 Learning Resources**: React, Node.js, and PostgreSQL communities
+- **🔧 Tool Providers**: GitHub, Neon, Supabase, and all open-source libraries used
+
+### 🎯 **Want to Contribute?**
+
+We welcome new contributors! Here's how you can help:
+
+1. **🐛 Bug Reports**: Found an issue? [Open an issue](https://github.com/deekshithgowda85/EcoFinds-PERN/issues)
+2. **💡 Feature Requests**: Have ideas? We'd love to hear them!
+3. **🔧 Code Contributions**: Fork, develop, and submit a pull request
+4. **📖 Documentation**: Help improve our guides and documentation
+5. **🎨 Design**: UI/UX improvements and suggestions
+
+### 📊 **Contribution Stats**
+
+![Contributors](https://img.shields.io/github/contributors/deekshithgowda85/EcoFinds-PERN?style=for-the-badge)
+![Commits](https://img.shields.io/github/commit-activity/m/deekshithgowda85/EcoFinds-PERN?style=for-the-badge)
+![Last Commit](https://img.shields.io/github/last-commit/deekshithgowda85/EcoFinds-PERN?style=for-the-badge)
+
+---
+
+## �💡 Contact & Support
+
+<div align="center">
 
 📧 For questions or support, please [open an issue](https://github.com/Manu77211/ecofinds/issues)
+or
+please [open an issue](https://github.com/deekshithgowda85/EcoFinds-PERN/issues)
 
 </div>
