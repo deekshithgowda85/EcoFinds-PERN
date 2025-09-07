@@ -10,16 +10,23 @@
 ![GitHub stars](https://img.shields.io/github/stars/Manu77211/ecofinds?style=for-the-badge)
 ![GitHub forks](https://img.shields.io/github/forks/Manu77211/ecofinds?style=for-the-badge)
 ![GitHub issues](https://img.shields.io/github/issues/Manu77211/ecofinds?style=for-the-badge)
-![GitHub license](https://img.shields.io/github/license/Man## 💡 Contact & Support
+![GitHub license](https://img.shields.io/github/## 💡 Contact & Support
 
 <div align="center">
 
-**Created with ❤️ by [Deekshith Gowda](https://github.com/deekshithgowda85)**
+**Created with ❤️ by the EcoFinds Team**
 
-[![GitHub](https://img.shields.io/badge/GitHub-deekshithgowda85-black?style=for-the-badge&logo=github)](https://github.com/deekshithgowda85)
-[![Project](https://img.shields.io/badge/Project-EcoFinds--PERN-green?style=for-the-badge&logo=github)](https://github.com/deekshithgowda85/EcoFinds-PERN)
+### 👥 **Project Creators**
 
-📧 For questions or support, please [open an issue](https://github.com/deekshithgowda85/EcoFinds-PERN/issues)
+|                                                             **Deekshith Gowda**                                                              |                                                         **Manu77211**                                                          |
+| :------------------------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------: |
+|                    <img src="https://github.com/deekshithgowda85.png" width="80" height="80" style="border-radius: 50%;">                    |                <img src="https://github.com/Manu77211.png" width="80" height="80" style="border-radius: 50%;">                 |
+| [![GitHub](https://img.shields.io/badge/GitHub-deekshithgowda85-black?style=for-the-badge&logo=github)](https://github.com/deekshithgowda85) | [![GitHub](https://img.shields.io/badge/GitHub-Manu77211-black?style=for-the-badge&logo=github)](https://github.com/Manu77211) |
+
+### 📧 **For questions or support, please open an issue:**
+
+[![Deekshith's Repository](https://img.shields.io/badge/Issues-Deekshith's%20Repo-blue?style=for-the-badge&logo=github)](https://github.com/deekshithgowda85/EcoFinds-PERN/issues)
+[![Manu's Repository](https://img.shields.io/badge/Issues-Manu's%20Repo-green?style=for-the-badge&logo=github)](https://github.com/Manu77211/ecofinds/issues)
 
 **Connect with the Team:**
 
@@ -28,7 +35,7 @@
 - 💬 **Discussions** for questions and ideas
 - 🚀 **Fork** to contribute to the project
 
-</div>ofinds?style=for-the-badge)
+</div>anu77211/ecofinds?style=for-the-badge)
 ![GitHub last commit](https://img.shields.io/github/last-commit/Manu77211/ecofinds?style=for-the-badge)
 
 ![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
@@ -542,12 +549,11 @@ If you found this project helpful, please consider:
 
 <div align="center">
 
-| Contributor | GitHub Profile |
-| ----------- | -------------- |
-
-| **Manu77211** | [![GitHub](https://img.shields.io/badge/GitHub-Manu77211-black?style=flat&logo=github)](https://github.com/Manu77211) |
-| **devbharu** | [![GitHub](https://img.shields.io/badge/GitHub-devbharu-black?style=flat&logo=github)](https://github.com/devbharu) |
-| **Deekshith Gowda** | [![GitHub](https://img.shields.io/badge/GitHub-deekshithgowda85-black?style=flat&logo=github)](https://github.com/deekshithgowda85) |
+| Avatar                                                                                                 | Contributor         | GitHub Profile                                                                                                                      |
+| ------------------------------------------------------------------------------------------------------ | ------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| <img src="https://github.com/Manu77211.png" width="50" height="50" style="border-radius: 50%;">        | **Manu77211**       | [![GitHub](https://img.shields.io/badge/GitHub-Manu77211-black?style=flat&logo=github)](https://github.com/Manu77211)               |
+| <img src="https://github.com/devbharu.png" width="50" height="50" style="border-radius: 50%;">         | **devbharu**        | [![GitHub](https://img.shields.io/badge/GitHub-devbharu-black?style=flat&logo=github)](https://github.com/devbharu)                 |
+| <img src="https://github.com/deekshithgowda85.png" width="50" height="50" style="border-radius: 50%;"> | **Deekshith Gowda** | [![GitHub](https://img.shields.io/badge/GitHub-deekshithgowda85-black?style=flat&logo=github)](https://github.com/deekshithgowda85) |
 
 </div>
 
